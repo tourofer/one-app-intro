@@ -11,4 +11,8 @@ export async function getPrice(fetch)  {
 })
 }
 
+export async function getCoinList(fetch)  {
+    return fetch()
+ }
+
 const extractPrice = (currency) => currency.symbol + currency.rate

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native';
 
-export default CoinInfo = () => {
+export default CoinInfo = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Coin Info Screen</Text>

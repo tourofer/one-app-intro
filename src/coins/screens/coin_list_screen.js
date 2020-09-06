@@ -5,17 +5,18 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'remx';
 import { coinStore } from '../coins.store';
-import * as coinListActions from '../coins_list.actions';
+import * as coinActions from '../coins.actions';
 
 const CoinsList = (props) => {
 
   useEffect(() => {
-    coinListActions.fetchCoins()
+    coinActions.fetchCoinList()
   }, [])
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Coin List Screen</Text>
+      <Text style={styles.text}>{JSON.stringify(props.coins)}</Text>
       <Button
         testID="test-button"
         onPress={() => {

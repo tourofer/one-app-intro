@@ -1,7 +1,7 @@
 import * as remx from 'remx';
 
 const initialState = {
-    coins: ['Bitcoin', 'other-false-coin']
+    coins: []
 };
 
 const state = remx.state(initialState);
@@ -14,7 +14,7 @@ const getters = remx.getters({
 
 const setters = remx.setters({
     setCoins(coins) {
-        this.state = coins
+        state.coins = coins
     },
     addCoin(coin) {
         state.coins = [...state.coins, coin];
