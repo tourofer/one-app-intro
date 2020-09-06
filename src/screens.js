@@ -1,11 +1,11 @@
-import {Navigation} from 'react-native-navigation';
+import { Navigation } from 'react-native-navigation';
 
 
 const coinListRoute = 'coin.List'
 const coinInfoRoute = 'coin.Info'
 
 export function registerScreens() {
- 
+
   Navigation.registerComponent(
     coinListRoute,
     () => require('./coins/screens/coin_list_screen').default,
