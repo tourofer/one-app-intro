@@ -1,4 +1,14 @@
-export async function getPrice(fetch)  {
+interface Price {
+    symbol: String,
+    rate: number
+}
+
+interface CoinsData {
+    timestamp: number,
+    coins: any
+}
+
+export async function getPrice(fetch : any) : Promise<Price>  {
    return fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
     .then(response => response.json())
     .then(data => data.bpi)
@@ -11,11 +21,11 @@ export async function getPrice(fetch)  {
 })
 }
 
-export async function getCoinList(fetch)  {
+export async function getCoinList(fetch: any) : Promise<CoinsData>  {
     const coins = await fetch()
     return {
         timestamp : Date.now(),
         coins: coins
  }}
 
-const extractPrice = (currency) => currency.symbol + currency.rate
+const extractPrice = (currency : any) => ({symbol: currency.symbol, rate: currency.rate})

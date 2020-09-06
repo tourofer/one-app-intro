@@ -9,10 +9,8 @@ export async function fetchCoinList() {
     coinStore.setCoins(res);
 }
 
-export async function fetchPrice(fetch) {
-    console.log("fetch price called results:" + res)
+export async function fetchPrice(fetch : any) {
     const res = await Api.getPrice(fetch)
     console.log("got results:" + res)
     return res
 }
-
