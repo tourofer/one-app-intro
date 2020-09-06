@@ -16,9 +16,11 @@ const CoinsList = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Coin List Screen</Text>
-      <Button onPress={() => {
-        navigateToCoinInfo(props.componentId)
-      }} title="Press Me" />
+      <Button
+        testID="test-button"
+        onPress={() => {
+          navigateToCoinInfo(props.componentId)
+        }} title="Press Me" />
       <Text>{props.coins}</Text>
     </View>
   );
