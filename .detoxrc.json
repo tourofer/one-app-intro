@@ -1,0 +1,14 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "e2e/config.json",
+  "configurations": {
+    "ios.sim.debug": {
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ofer_intro.app",
+      "build": "xcodebuild -workspace ios/ofer_intro.xcworkspace -scheme ofer_intro -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 11 Pro"
+      }
+    }
+  }
+}
