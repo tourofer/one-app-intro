@@ -22,7 +22,7 @@ const CoinsList = (props) => {
         onPress={() => {
           navigateToCoinInfo(props.componentId)
         }} title="Press Me" />
-      <Text>{props.coins}</Text>
+      
     </View>
   );
 }

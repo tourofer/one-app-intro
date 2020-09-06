@@ -31,7 +31,7 @@ describe('getPrice', () => {
     const mockResult = Promise.resolve({
         json: () => Promise.resolve(dataSnapshot)
     })
-    
+
     it('will fetch prices from coindesk', async () => {
         const fakeFetch = (url) => {
             expect(url).toEqual('https://api.coindesk.com/v1/bpi/currentprice.json')
@@ -64,8 +64,13 @@ describe('get coin list', () => {
             return mockCoinList
         }
 
+        const realDateNow = Date.now.bind(global.Date);
+        const dateNowStub = jest.fn(() => 1530518207007);
+        global.Date.now = dateNowStub;
+
         const result = await Api.getCoinList(fakeFetch)
-        expect(result).toEqual(['Bitcoin', 'mock-coin'])
+        expect(result.timestamp).toEqual(1530518207007)
+        expect(result.coins).toEqual(['Bitcoin', 'mock-coin'])
     })
 })
 

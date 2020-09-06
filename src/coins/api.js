@@ -12,7 +12,10 @@ export async function getPrice(fetch)  {
 }
 
 export async function getCoinList(fetch)  {
-    return fetch()
- }
+    const coins = await fetch()
+    return {
+        timestamp : Date.now(),
+        coins: coins
+ }}
 
 const extractPrice = (currency) => currency.symbol + currency.rate
