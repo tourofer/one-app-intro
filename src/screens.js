@@ -8,10 +8,10 @@ export function registerScreens() {
  
   Navigation.registerComponent(
     coinListRoute,
-    () => require('./weather/screens/coin_list_screen').default,
+    () => require('./coins/screens/coin_list_screen').default,
   );
   Navigation.registerComponent(
     'coin.Info',
-    () => require('./weather/screens/coin_info_screen').default,
+    () => require('./coins/screens/coin_info_screen').default,
   );
 }
