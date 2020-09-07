@@ -1,20 +1,20 @@
-export interface ForcastItemInterface {
-    state_name: String;
-    wind_direction: String;
-    when: String;
+ interface ForcastItemInterface {
+    weather_state_name: String;
+    wind_direction_compass: String;
+    created: String;
     min_temp: number;
     max_temp: number;
     humidity: number;
     predictability: number;
 }
 
-export interface DayForcastInterface {
+ interface DayForcastInterface {
     city_name: String,
     date: String,
     items: Array<ForcastItemInterface>
 }
 
-export class DayForecast implements DayForcastInterface {
+ class DayForecast implements DayForcastInterface {
     city_name: String;
     date: String;
     items: ForcastItemInterface[];
@@ -30,10 +30,10 @@ export class DayForecast implements DayForcastInterface {
     }
 }
 
-export class ForcastItem implements ForcastItemInterface {
-    state_name: String;
-    wind_direction: String;
-    when: String;
+ class ForcastItem implements ForcastItemInterface {
+    weather_state_name: String;
+    wind_direction_compass: String;
+    created: String;
     min_temp: number;
     max_temp: number;
     humidity: number;
@@ -48,9 +48,9 @@ export class ForcastItem implements ForcastItemInterface {
         humidity: number,
         predictability: number
     ) {
-        this.state_name = state_name;
-        this.wind_direction = wind_direction;
-        this.when = when;
+        this.weather_state_name = state_name;
+        this.wind_direction_compass = wind_direction;
+        this.created = when;
         this.min_temp = min_temp;
         this.max_temp = max_temp;
         this.humidity = humidity;
@@ -58,3 +58,5 @@ export class ForcastItem implements ForcastItemInterface {
     }
 
 }
+
+export { ForcastItem, DayForecast,  DayForcastInterface,ForcastItemInterface };
