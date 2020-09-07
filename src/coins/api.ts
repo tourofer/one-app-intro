@@ -25,7 +25,7 @@ export async function getCoinList(fetch: any) : Promise<CoinsData>  {
     const coins = await fetch()
     return {
         timestamp : Date.now(),
-        coins: coins
+        coins: coins 
  }}
 
 const extractPrice = (currency : any) => ({symbol: currency.symbol, rate: currency.rate})

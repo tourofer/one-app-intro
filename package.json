@@ -11,6 +11,7 @@
     "start-e2e": "RN_SRC_EXT=e2e.js react-native start"
   },
   "dependencies": {
+    "@types/jest": "^26.0.13",
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-navigation": "^6.12.2",

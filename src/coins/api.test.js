@@ -1,4 +1,5 @@
 import * as Api from './api'
+import * as  Helper from '../test_helper'
 
 describe('getPrice', () => {
 
@@ -28,10 +29,9 @@ describe('getPrice', () => {
         }
     }
 
-    const mockResult = Promise.resolve({
-        json: () => Promise.resolve(dataSnapshot)
-    })
-
+    const mockResult = Helper.wrapWithJson(dataSnapshot)
+    
+    
     it('will fetch prices from coindesk', async () => {
         const fakeFetch = (url) => {
             expect(url).toEqual('https://api.coindesk.com/v1/bpi/currentprice.json')
@@ -48,9 +48,9 @@ describe('getPrice', () => {
         }
 
         const response = await Api.getPrice(fakeFetch)
-        expect(response.usd).toEqual("$10,257.4012")
-        expect(response.gbp).toEqual("£7,724.5309")
-        expect(response.eur).toEqual("€8,664.8063")
+        expect(response.usd).toEqual({"rate": "10,257.4012", "symbol": "$"})
+        expect(response.gbp).toEqual({"rate": "7,724.5309", "symbol":"£"})
+        expect(response.eur).toEqual({"rate": "8,664.8063", "symbol": "€"})
 
     })
 })
