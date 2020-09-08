@@ -58,7 +58,8 @@ describe('Weather Api', () => {
         );
     }
 
-    it('will call the correct url given a date', async () => {
+    
+    it('will call the correct url given a date when called with new date', async () => {
         mockResponse(stubResponses.realDataSnapShot)
 
         await Api.fetchWeather(

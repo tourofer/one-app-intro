@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, FlatList, Button } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import {Navigation} from 'react-native-navigation'
 
 const countryData = [
     {
@@ -14,6 +14,14 @@ const countryData = [
 ]
 
 export default MainWeather = (props) => {
+
+    countryKeyExtractor = (item) => `${item.id}-key`;
+
+    renderItem = ({ item, componentId }) => (
+        <View>
+            <Text onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
+        </View>
+    );
     return (
         <View>
             <Button title="London" onPress={() => handleItemClick(props.componentId, countryData[0])} />
@@ -27,28 +35,22 @@ export default MainWeather = (props) => {
     );
 }
 
-countryKeyExtractor = (item) => `${item.id}-key`;
 
-renderItem = ({ item, componentId }) => (
-    <View>
-        <Text onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
-    </View>
-);
 
-const handleItemClick = (componentId, item) => {
+handleItemClick = (componentId, item) => {
     Navigation.push(componentId, {
         component: {
             name: 'weather.cityInfo',
             passProps: {
                 city: item,
             },
-              options: {
+            options: {
                 topBar: {
-                  title: {
-                    text: item.name,
-                  },
+                    title: {
+                        text: item.name,
+                    },
                 },
-              },
+            },
         },
     });
 }
