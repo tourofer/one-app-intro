@@ -1,25 +1,32 @@
 import { Navigation } from 'react-native-navigation';
 
 
-const coinListRoute = 'coin.List'
-const coinInfoRoute = 'coin.Info'
+export const ScreenRoutes = {
+  coins: {
+    coin_list_route: 'coin.List',
+    coin_info_route: 'coin.Info'
+  },
+  weather: {
+    main_route: 'weather.Main',
+    city_info_route: 'weather.cityInfo'
+  }
+}
 
 export function registerScreens() {
-
   Navigation.registerComponent(
-    coinListRoute,
+    ScreenRoutes.coins.coin_list_route,
     () => require('./coins/screens/coin_list_screen').default,
   );
   Navigation.registerComponent(
-    'coin.Info',
+    ScreenRoutes.coins.coin_info_route,
     () => require('./coins/screens/coin_info_screen').default,
   );
   Navigation.registerComponent(
-    'weather.Main',
+    ScreenRoutes.weather.main_route,
     () => require("./weather/screens/main_weather_display_screen").default
   );
   Navigation.registerComponent(
-    'weather.cityInfo',
+    ScreenRoutes.weather.city_info_route,
     () => require("./weather/screens/city_weather_info_screen").default
   )
 }

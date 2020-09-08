@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, Button } from 'react-native';
 import {Navigation} from 'react-native-navigation'
+import {ScreenRoutes} from '../../screens'
 
 const countryData = [
     {
@@ -40,7 +41,7 @@ export default MainWeather = (props) => {
 handleItemClick = (componentId, item) => {
     Navigation.push(componentId, {
         component: {
-            name: 'weather.cityInfo',
+            name: ScreenRoutes.weather.city_info_route,
             passProps: {
                 city: item,
             },

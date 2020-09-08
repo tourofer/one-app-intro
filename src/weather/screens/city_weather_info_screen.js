@@ -6,7 +6,6 @@ export default CityWeather = (props) => {
     const [response, setResponse] = useState(null)
     useEffect(() => {
         async function fetchData() {
-            console.log(`requesting: id: ${JSON.stringify(props.city)}`)
             const response = await Api.fetchWeather(props.city.id, props.city.name, new Date())
             setResponse(response)
         }

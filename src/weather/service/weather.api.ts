@@ -8,7 +8,7 @@ export async function fetchWeather(
     date: Date,
     itemsNum: number = 12
 ): Promise<DayForcastInterface> {
-    console.log("called with date: " + date)
+    
     const response = await fetch(`https://www.metaweather.com/api/location/${city_id}/${parseRequestDate(date)}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
 

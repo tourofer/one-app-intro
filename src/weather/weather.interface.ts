@@ -15,6 +15,11 @@
     items: Array<ForcastItemInterface>
 }
 
+ export interface City {
+    id: string;
+    name: string;
+}
+
  class DayForecast implements DayForcastInterface {
     city_name: string;
     date: string;

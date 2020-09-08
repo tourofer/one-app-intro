@@ -1,5 +1,5 @@
 import * as Api from "./weather.api"
-import { DayForcastInterface} from "./weather.interface"
+import { DayForcastInterface} from "../weather.interface"
 
 describe('Weather Api', () => {
 
@@ -59,7 +59,7 @@ describe('Weather Api', () => {
     }
 
     
-    it('will call the correct url given a date when called with new date', async () => {
+    it('will call the correct url given a date', async () => {
         mockResponse(stubResponses.realDataSnapShot)
 
         await Api.fetchWeather(
