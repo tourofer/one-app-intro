@@ -14,4 +14,12 @@ export function registerScreens() {
     'coin.Info',
     () => require('./coins/screens/coin_info_screen').default,
   );
+  Navigation.registerComponent(
+    'weather.Main',
+    () => require("./weather/screens/main_weather_display_screen").default
+  );
+  Navigation.registerComponent(
+    'weather.cityInfo',
+    () => require("./weather/screens/city_weather_info_screen").default
+  )
 }

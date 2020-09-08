@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'remx';
 import { coinStore } from '../coins.store';
-import * as coinActions from '../coins.actions';
+import * as coinActions from '../store/coins.actions';
 
 const CoinsList = (props) => {
 

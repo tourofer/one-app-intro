@@ -9,9 +9,11 @@ interface CoinsData {
 }
 
 export async function getPrice(fetch : any) : Promise<Price>  {
+    //TODO move to async await
+    //todo create config 
    return fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
     .then(response => response.json())
-    .then(data => data.bpi)
+    .then(data => data.bpi) //todo remove this line
     .then(bpi => {
         return  {
                 "usd" : extractPrice(bpi.USD),

@@ -8,15 +8,15 @@ describe('Coin Actions', () => {
     ]
 
     beforeEach(() => {
-        jest.mock('./coins.store');
-        mockStore = require('./coins.store').coinStore;
+        jest.mock('../store/coins.store');
+        mockStore = require('../store/coins.store').coinStore;
 
         mockFetchCoinList = jest.fn().mockResolvedValue(mockCoins);
-        jest.mock('./api', () => ({
+        jest.mock('../service/api', () => ({
             getCoinList: mockFetchCoinList,
         }));
 
-        coinActions = require('./coins.actions');
+        coinActions = require('../store/coins.actions');
     });
 
     it('should fetch coin list from server', async () => {

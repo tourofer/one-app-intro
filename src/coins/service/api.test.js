@@ -1,5 +1,5 @@
-import * as Api from './api'
-import * as  Helper from '../test_helper'
+import * as Api from '../service/api'
+import * as  Helper from './test_helper'
 
 describe('getPrice', () => {
 

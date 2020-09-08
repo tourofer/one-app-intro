@@ -12,11 +12,11 @@ Navigation.events().registerAppLaunchedListener(() => {
                 children: [
                     {
                         component: {
-                            name: 'coin.List',
+                            name: 'weather.Main',
                             options: {
                                 topBar: {
                                     title: {
-                                        text: 'Coins List',
+                                        text: 'Weather',
                                     },
                                 },
                             },

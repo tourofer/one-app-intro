@@ -1,5 +1,5 @@
 import { coinStore } from './coins.store';
-import * as Api from './api'
+import * as Api from '../service/api'
 
 const coins = ['Bitcoin', 'new-coins']
 
