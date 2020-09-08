@@ -1,7 +1,8 @@
  interface ForcastItemInterface {
-    weather_state_name: String;
-    wind_direction_compass: String;
-    created: String;
+    id: string;
+    weather_state_name: string;
+    wind_direction_compass: string;
+    created: string;
     min_temp: number;
     max_temp: number;
     humidity: number;
@@ -9,19 +10,19 @@
 }
 
  interface DayForcastInterface {
-    city_name: String,
-    date: String,
+    city_name: string,
+    date: string,
     items: Array<ForcastItemInterface>
 }
 
  class DayForecast implements DayForcastInterface {
-    city_name: String;
-    date: String;
+    city_name: string;
+    date: string;
     items: ForcastItemInterface[];
 
      constructor(
-        city_name: String,
-        date: String,
+        city_name: string,
+        date: string,
         items: ForcastItemInterface[],
     ) {
         this.city_name = city_name
@@ -31,23 +32,26 @@
 }
 
  class ForcastItem implements ForcastItemInterface {
-    weather_state_name: String;
-    wind_direction_compass: String;
-    created: String;
+     id: string;
+    weather_state_name: string;
+    wind_direction_compass: string;
+    created: string;
     min_temp: number;
     max_temp: number;
     humidity: number;
     predictability: number;
 
     constructor(
+        id: string,
         state_name: string,
-        wind_direction: String,
-        when: String,
+        wind_direction: string,
+        when: string,
         min_temp: number,
         max_temp: number,
         humidity: number,
         predictability: number
     ) {
+        this.id = id;
         this.weather_state_name = state_name;
         this.wind_direction_compass = wind_direction;
         this.created = when;
