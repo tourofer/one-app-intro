@@ -31,7 +31,6 @@ countryKeyExtractor = (item) => `${item.id}-key`;
 
 renderItem = ({item, componentId}) => (
     <View>
-        
         <Text  onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
     </View>
 );

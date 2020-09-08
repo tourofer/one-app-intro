@@ -1,6 +1,5 @@
 import * as Api from "./weather.api"
-import * as Helper from "../coins/service/test_helper"
-import { DayForecast, DayForcastInterface, ForcastItemInterface, ForcastItem } from "./weather.interface"
+import { DayForcastInterface} from "./weather.interface"
 
 describe('Weather Api', () => {
 
@@ -58,21 +57,6 @@ describe('Weather Api', () => {
         );
     }
 
-
-
-
-    it('will add city name & date to response object', async () => {
-        mockResponse(stubResponses.realDataSnapShot)
-
-        const response: DayForcastInterface = await Api.fetchWeather(
-            stub_forcast_request.city_id,
-            stub_forcast_request.city,
-            stub_forcast_request.date)
-
-        expect(response.city_name).toEqual(stub_forcast_response.city)
-        expect(response.date).toEqual(stub_forcast_response.formatted_date)
-    })
-
     it('will call the correct url given a date', async () => {
         mockResponse(stubResponses.realDataSnapShot)
 
@@ -82,6 +66,18 @@ describe('Weather Api', () => {
             stub_forcast_request.date)
 
         expect(global.fetch).toBeCalledWith("https://www.metaweather.com/api/location/test-city-id/2014/Mar/24/")
+    })
+
+    it('will enrich response data with city name & date fields', async () => {
+        mockResponse(stubResponses.realDataSnapShot)
+
+        const response: DayForcastInterface = await Api.fetchWeather(
+            stub_forcast_request.city_id,
+            stub_forcast_request.city,
+            stub_forcast_request.date)
+
+        expect(response.city_name).toEqual(stub_forcast_response.city)
+        expect(response.date).toEqual(stub_forcast_response.formatted_date)
     })
 
     it('should limit forcast items to 12 per day', async () => {

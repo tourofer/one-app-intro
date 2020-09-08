@@ -1,5 +1,5 @@
-import "./weather.interface"
-import { DayForcastInterface, DayForecast, ForcastItemInterface } from "./weather.interface"
+import "../weather.interface"
+import { DayForcastInterface, DayForecast, ForcastItemInterface } from "../weather.interface"
 
 
 export async function fetchWeather(
