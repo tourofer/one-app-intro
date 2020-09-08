@@ -8,8 +8,8 @@ export async function fetchWeather(
     date: Date,
     itemsNum: number = 12
 ): Promise<DayForcastInterface> {
-    const requestDate = parseRequestDate(date)
-    const response = await fetch(`https://www.metaweather.com/api/location/${city_id}/${requestDate}/`);
+    console.log("called with date: " + date)
+    const response = await fetch(`https://www.metaweather.com/api/location/${city_id}/${parseRequestDate(date)}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
 
     const filteredItems = filterForcastCreatedAfterDate(responseJson, date)
@@ -23,6 +23,11 @@ export async function fetchWeather(
 }
 
 function filterForcastCreatedAfterDate(items: Array<ForcastItemInterface>, maxAllowedDate: Date): Array<ForcastItemInterface> {
+    maxAllowedDate.setHours(23)
+    maxAllowedDate.setMinutes(59)
+    maxAllowedDate.setSeconds(59)
+
+
     return items.filter(item => {
         const createdDate = new Date(item.created)
         return createdDate.getDay() >= maxAllowedDate.getDay()
@@ -48,7 +53,7 @@ function sortByDate(items: Array<ForcastItemInterface>): Array<ForcastItemInterf
 }
 
 function parseRequestDate(date: Date) {
-    const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'short', day: '2-digit' })
+    const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
     const [{ value: month }, , { value: day }, , { value: year }] = dateTimeFormat.formatToParts(date)
 
     return `${year}/${month}/${day}`

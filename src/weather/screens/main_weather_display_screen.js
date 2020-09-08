@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, FlatList } from 'react-native';
-import {Navigation} from 'react-native-navigation';
+import { View, Text, FlatList, Button } from 'react-native';
+import { Navigation } from 'react-native-navigation';
 
 const countryData = [
     {
@@ -13,42 +13,42 @@ const countryData = [
     }
 ]
 
-export default  MainWeather = (props) => {
+export default MainWeather = (props) => {
     return (
         <View>
-            <Text>Check</Text>
+            <Button title="London" onPress={() => handleItemClick(props.componentId, countryData[0])} />
             <FlatList
-                        data={countryData}
-                        keyExtractor={countryKeyExtractor}
-                        renderItem={(item) => renderItem(item, props.componentId)}
-                    />
+                data={countryData}
+                keyExtractor={countryKeyExtractor}
+                renderItem={(item) => renderItem(item, props.componentId)}
+            />
         </View>
-        
+
     );
 }
 
 countryKeyExtractor = (item) => `${item.id}-key`;
 
-renderItem = ({item, componentId}) => (
+renderItem = ({ item, componentId }) => (
     <View>
-        <Text  onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
+        <Text onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
     </View>
 );
 
 const handleItemClick = (componentId, item) => {
     Navigation.push(componentId, {
         component: {
-          name: 'weather.cityInfo',
-          passProps: {
-            item,
-          },
-        //   options: {
-        //     topBar: {
-        //       title: {
-        //         text: item.name,
-        //       },
-        //     },
-        //   },
+            name: 'weather.cityInfo',
+            passProps: {
+                city: item,
+            },
+              options: {
+                topBar: {
+                  title: {
+                    text: item.name,
+                  },
+                },
+              },
         },
-      });
+    });
 }

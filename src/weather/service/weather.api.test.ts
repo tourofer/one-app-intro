@@ -45,7 +45,8 @@ describe('Weather Api', () => {
     const testConsts = {
         forcast_item_count: 12,
         expected_ordered_ids: [1, 2, 3],
-        expected_ids_without_future_item: [1]
+        expected_ids_without_future_item: [1],
+        expected_fetch_url : "https://www.metaweather.com/api/location/test-city-id/2014/03/24/"
     }
 
     function mockResponse(item) {
@@ -65,7 +66,7 @@ describe('Weather Api', () => {
             stub_forcast_request.city,
             stub_forcast_request.date)
 
-        expect(global.fetch).toBeCalledWith("https://www.metaweather.com/api/location/test-city-id/2014/Mar/24/")
+        expect(global.fetch).toBeCalledWith(testConsts.expected_fetch_url)
     })
 
     it('will enrich response data with city name & date fields', async () => {

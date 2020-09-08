@@ -4,7 +4,7 @@ import { Navigation } from 'react-native-navigation';
 import PropTypes from 'prop-types';
 
 import { connect } from 'remx';
-import { coinStore } from '../coins.store';
+import { coinStore } from '../store/coins.store';
 import * as coinActions from '../store/coins.actions';
 
 const CoinsList = (props) => {

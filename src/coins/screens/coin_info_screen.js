@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native';
-import * as coinActions from '../coins.actions';
+import * as coinActions from '../store/coins.actions';
 
 
 export default CoinInfo = (props) => {
