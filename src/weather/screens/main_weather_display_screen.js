@@ -18,6 +18,7 @@ export default MainWeather = (props) => {
 
     countryKeyExtractor = (item) => `${item.id}-key`;
 
+    //FIXME navigation is not working on list items currently
     renderItem = ({ item, componentId }) => (
         <View>
             <Text onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>

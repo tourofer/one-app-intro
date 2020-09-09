@@ -1,6 +1,6 @@
 import "../weather.interface"
 import { DayForcastInterface, DayForecast, ForcastItemInterface } from "../weather.interface"
-
+import moment from 'moment';
 
 export async function fetchWeather(
     city_id: string,
@@ -12,7 +12,7 @@ export async function fetchWeather(
     const response = await fetch(`https://www.metaweather.com/api/location/${city_id}/${parseRequestDate(date)}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
 
-    const filteredItems = filterForcastCreatedAfterDate(responseJson, date)
+    const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
     const parsedItems = sortByDate(filteredItems)
         .slice(0, itemsNum)
         .map(item => {
@@ -22,33 +22,32 @@ export async function fetchWeather(
     return new DayForecast(city, parseResponseDate(date), parsedItems)
 }
 
-function filterForcastCreatedAfterDate(items: Array<ForcastItemInterface>, maxAllowedDate: Date): Array<ForcastItemInterface> {
-    maxAllowedDate.setHours(23)
-    maxAllowedDate.setMinutes(59)
-    maxAllowedDate.setSeconds(59)
-
+function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {
+     const maxAllowedDate = moment(requestDate).utc()
+     maxAllowedDate.set({hour:23,minute:59,second:59,millisecond:999})
+  
 
     return items.filter(item => {
-        const createdDate = new Date(item.created)
-        return createdDate.getDay() >= maxAllowedDate.getDay()
+        const createdDate = moment(item.created).utc()
+        if (createdDate > maxAllowedDate) {
+            console.log("found future item: " + JSON.stringify(item))
+            console.log("createdTime: " + createdDate)
+            console.log("maxAllowed: " + maxAllowedDate)
+
+        }
+        return createdDate <= maxAllowedDate
     })
 }
 
 function hhmm(date: Date) {
-    return `${date.getHours()}:${date.getMinutes()}`
+   return moment(date).utc().format('HH:mm')
 }
 
 function sortByDate(items: Array<ForcastItemInterface>): Array<ForcastItemInterface> {
     return items.sort((a, b) => {
-        const aDate = new Date(a.created)
-        const bDate = new Date(b.created)
-        if (aDate > bDate) {
-            return -1
-        } else if (aDate == bDate) {
-            return 0
-        } else {
-            return 1
-        }
+        const aDate = moment(a.created)
+        const bDate = moment(b.created)
+        return bDate.valueOf() - aDate.valueOf()
     })
 }
 

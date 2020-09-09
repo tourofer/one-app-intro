@@ -5,6 +5,7 @@ import * as Api from '../service/weather.api'
 export default CityWeather = (props) => {
     const [response, setResponse] = useState(null)
     useEffect(() => {
+        //TODO how do we handle erros?
         async function fetchData() {
             const response = await Api.fetchWeather(props.city.id, props.city.name, new Date())
             setResponse(response)
@@ -12,6 +13,7 @@ export default CityWeather = (props) => {
         fetchData()
     }, [])
 
+    //TODO how to do conditional renders?
     return <View>
         {response ?
             <View>
@@ -33,3 +35,5 @@ renderItem = ({ item }) => {
         <Text>{JSON.stringify(item)}</Text>
     )
 }
+
+

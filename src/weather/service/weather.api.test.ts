@@ -6,12 +6,12 @@ describe('Weather Api', () => {
     const stub_forcast_request = {
         city_id: "test-city-id",
         city: "Tel-aviv",
-        date: new Date("2014-03-24")
+        date: new Date("2013-04-27")
     }
 
     const stub_forcast_response = {
         city: "Tel-aviv",
-        formatted_date: "24.03.2014"
+        formatted_date: "27.04.2013"
     }
 
     const stubResponses = {
@@ -46,7 +46,22 @@ describe('Weather Api', () => {
         forcast_item_count: 12,
         expected_ordered_ids: [1, 2, 3],
         expected_ids_without_future_item: [1],
-        expected_fetch_url : "https://www.metaweather.com/api/location/test-city-id/2014/03/24/"
+        expected_fetch_url : "https://www.metaweather.com/api/location/test-city-id/2013/04/27/",
+        //taken from london.response.json
+        expect_snapshot_filtered_items_id: [
+            366945,
+            373220,
+            371006,
+            363812,
+            359953,
+            364366,
+            367069,
+            362256,
+            361124,
+            358563,
+            351889,
+            357462
+        ]
     }
 
     function mockResponse(item) {
@@ -127,13 +142,16 @@ describe('Weather Api', () => {
             stub_forcast_request.date)
 
         const hours = response.items.map((item) => item.created)
+        const ids = response.items.map(item => item.id)
+
+        expect(ids).toEqual(testConsts.expect_snapshot_filtered_items_id)
         expect(hours).toEqual([
-            '23:52', '21:52',
-            '19:52', '17:52',
-            '15:52', '13:52',
-            '11:52', '9:52',
-            '7:52', '5:52',
-            '3:52', '1:52'
+            '22:52', '20:52',
+            '18:52', '16:52',
+            '14:52', '12:52',
+            '10:52', '08:52',
+            '06:52', '04:52',
+            '02:52', '00:52'
         ])
     })
 })
