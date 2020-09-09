@@ -13,6 +13,9 @@ export default CityWeather = (props) => {
         fetchData()
     }, [])
 
+    if (response) {
+        console.log("forcast data: " + JSON.stringify(response.items) )
+    }
     //TODO how to do conditional renders?
     return <View>
         {response ?
@@ -28,11 +31,14 @@ export default CityWeather = (props) => {
     </View>
 }
 
+
+
 forcastItemKeyExtractor = (item) => `${item.id}-key`;
 
 renderItem = ({ item }) => {
+    console.log("rendering forcast item: " + JSON.stringify(item))
     return (
-        <Text>{item.created}</Text>
+        <Text>created</Text>
     )
 }
 

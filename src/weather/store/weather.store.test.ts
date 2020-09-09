@@ -18,17 +18,31 @@ const test_stubs = {
 
 
 describe('weather store', () => {
+    afterEach(() => {
+        //uut.clearCities()
+    })
 
     describe('city list', () => {
         it('should have an initial local city data', () => {
             expect(uut.getCities()).toEqual(Store.localCitiesData);
-          });
+        });
 
-          it('should add a city', () => {
-            const newCity = {id: "new-city-id", name: "new-city-name"}
+        it('should add a city if not already exists', () => {
+            const newCity = { id: "new-city-id", name: "new-city-name" }
             uut.addCity(newCity)
             expect(uut.getCities()).toEqual([...Store.localCitiesData, newCity]);
-          });
+        });
+
+        it('addCity will ignore existing cities', () => {
+            const newCity = { id: "new-city-id", name: "new-city-name" }
+
+            for (let index = 0; index < 2; index++) {
+                uut.addCity(newCity)
+            }
+
+            const addedItems = [...uut.getCities()].filter((item) => item.id === "new-city-id")
+            expect(addedItems.length).toEqual(1);
+        });
     })
 
     describe('forcast items ', () => {
@@ -37,14 +51,14 @@ describe('weather store', () => {
             global.Date.now = dateNowStub;
             //@ts-ignore
             uut.setCityWeather(test_stubs.city_id, test_stubs.test_date, test_stubs.test_day_forcast)
-    
+
             const futureDateInSameDay = new Date(test_stubs.test_date.setHours(23))
             const cached_forcast = uut.getCityWeather(test_stubs.city_id, futureDateInSameDay)
             expect(cached_forcast).toEqual(test_stubs.test_day_forcast)
         })
     })
 
-    
+
 
 
 }) 

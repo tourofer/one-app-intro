@@ -14,18 +14,43 @@ export async function fetchWeather(
     const response = await fetch(`${base_url}/${city_id}/${requestDateFormat}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
 
-    const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
-    const parsedItems = sortByDate(filteredItems)
-        .slice(0, itemsNum)
-        .map(item => {
-            return ({ ...item, created: moment(item.created).format('HH:mm') })
-        })
-
-    return {
-        city_name: city,
-        date: moment(date).utc().format('DD.MM.yyyy'),
-        items: parsedItems
+   
+    try {
+        const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
+        const parsedItems = sortByDate(filteredItems)
+            .slice(0, itemsNum)
+            .map(item => {
+                return  {
+                    id: item.id,
+                    created : moment(item.created).format('HH:mm') ,
+                    weather_state_name : item.weather_state_name,
+                    wind_direction_compass: item.wind_direction_compass,
+                    //TODO test temp parsing
+                    min_temp: parseTemp(item.min_temp),
+                    max_temp: parseTemp(item.max_temp), 
+                    humidity: item.humidity,
+                    predictability: item.predictability
+                }
+                
+            })
+    
+        return {
+            city_name: city,
+            date: moment(date).utc().format('DD.MM.yyyy'),
+            items: parsedItems
+        }
+    } catch (e) {
+        console.log("error parsing respose: " + e)
+        return null
     }
+    
+}
+
+function parseTemp(temp: number) {
+    if (temp) {
+        return parseFloat(temp.toFixed(2))
+    }
+    return null
 }
 
 export async function fetchCityId(cityName: string) : Promise<Array<City>> {
@@ -38,7 +63,6 @@ export async function fetchCityId(cityName: string) : Promise<Array<City>> {
 function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {
     const maxAllowedDateInUtc = moment(requestDate).utc()
     maxAllowedDateInUtc.set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
-
 
     return items.filter(item => {
         const createdDateInUtc = moment(item.created).utc()

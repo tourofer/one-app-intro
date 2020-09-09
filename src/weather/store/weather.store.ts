@@ -1,8 +1,8 @@
 import * as remx from 'remx';
-import {City, DayForcastInterface} from '../weather.interface'
+import { City, DayForcastInterface } from '../weather.interface'
 const weatherCache = new Map()
 //TODO should move to it's own file
-export const localCitiesData : Array<City> =  [
+export const localCitiesData: Array<City> = [
     {
         id: "44418",
         name: "London"
@@ -17,31 +17,36 @@ export const localCitiesData : Array<City> =  [
 interface State {
     cities: Array<City>
 }
-const initialState : State = {
-    cities:  localCitiesData
-    }
+const initialState: State = {
+    cities: localCitiesData
+}
 
+const existingCityIds = new Set(localCitiesData.map(item => item.id))
 const state = remx.state(initialState);
 
 const getters = remx.getters({
     getCities() {
+        console.log("get cities: " + JSON.stringify(state.cities))
         return state.cities;
     },
     getCityWeather(cityId: string, date: Date) {
-        const key =   buildKey(cityId, date)
+        const key = buildKey(cityId, date)
         return weatherCache.get(key)
     }
 });
 
 const setters = remx.setters({
-    addCity(city : City) {
-        state.cities = [...state.cities, city];
+    addCity(city: City) {
+        if (!existingCityIds.has(city.id)) {
+            existingCityIds.add(city.id)
+            state.cities = [...state.cities, city];
+        }
     },
     setCityWeather(cityId: string, date: Date, dayForcast: DayForcastInterface) {
-        const key =   buildKey(cityId, date)
+        const key = buildKey(cityId, date)
         weatherCache.set(key, dayForcast)
     }
-}); 
+});
 
 const buildKey = (cityId: string, date: Date) => cityId + ":" + sanitizeRequestDate(date).getTime()
 

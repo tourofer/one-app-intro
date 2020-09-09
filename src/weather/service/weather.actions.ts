@@ -1,7 +1,7 @@
 import { City } from "../weather.interface";
 import { weatherStore } from "../store/weather.store"
 import * as WeatherApi from "./weather.api"
-import {Navigator} from "../weather.navigation"
+import {Navigation} from "react-native-navigation"
 
 
 export async function queryCity(query : string) : Promise<Array<City>> {
@@ -10,6 +10,8 @@ export async function queryCity(query : string) : Promise<Array<City>> {
 }
 
 export async function addCity(componentId: string, city: City)  {
+    console.log("add city called: " + JSON.stringify(city))
     weatherStore.addCity(city)
-    Navigator.navigateToCityWeather(componentId, city)
+    Navigation.dismissModal(componentId);
+   // Navigator.navigateToCityWeather(componentId, city)
 }
