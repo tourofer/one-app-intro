@@ -9,7 +9,7 @@ export default MainWeather = (props) => {
         if (e.buttonId === 'addCity') {
             Navigator.show_add_city_modal()
         }
-    });
+    }, props.componentId);
 
     const { cities } = useCountryListConnect()
 
