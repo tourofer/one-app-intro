@@ -2,33 +2,25 @@ import React from 'react';
 import { View, Text, FlatList, Button } from 'react-native';
 import {Navigation} from 'react-native-navigation'
 import {ScreenRoutes} from '../../screens'
-
-const countryData = [
-    {
-        id: 44418,
-        name: "London"
-    },
-    {
-        id: 2487956,
-        name: "San Francisco"
-    }
-]
+import {useConnect} from 'remx'
+import { weatherStore } from '../store/weather.store';
 
 export default MainWeather = (props) => {
-
     countryKeyExtractor = (item) => `${item.id}-key`;
 
-    //FIXME navigation is not working on list items currently
-    renderItem = ({ item, componentId }) => (
+    renderItem = ({item}, componentId) => (
         <View>
             <Text onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
         </View>
     );
+
+    const {cities} = useCountryListConnect()
+
     return (
         <View>
             <Button title="London" onPress={() => handleItemClick(props.componentId, countryData[0])} />
             <FlatList
-                data={countryData}
+                data={cities}
                 keyExtractor={countryKeyExtractor}
                 renderItem={(item) => renderItem(item, props.componentId)}
             />
@@ -37,7 +29,9 @@ export default MainWeather = (props) => {
     );
 }
 
-
+const useCountryListConnect = (props) => useConnect(() => ({
+    cities: weatherStore.getCities()
+  })); 
 
 handleItemClick = (componentId, item) => {
     Navigation.push(componentId, {

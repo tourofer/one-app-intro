@@ -1,7 +1,6 @@
 import * as Store from "../store/weather.store"
-import { DayForecast } from "../weather.interface";
-
-const store = Store.weatherStore;
+//TODO a more elegant way to import?
+const uut = Store.weatherStore;
 
 
 const test_stubs = {
@@ -20,16 +19,32 @@ const test_stubs = {
 
 describe('weather store', () => {
 
-    it('should add return existing results for the same day', async () => {
-        const dateNowStub = jest.fn(() => new Date(test_stubs.test_date).getMilliseconds());
-        global.Date.now = dateNowStub;
-        //@ts-ignore
-        store.setCityWeather(test_stubs.city_id, test_stubs.test_date, test_stubs.test_day_forcast)
+    describe('city list', () => {
+        it('should have an initial local city data', () => {
+            expect(uut.getCities()).toEqual(Store.localCitiesData);
+          });
 
-        const futureDateInSameDay = new Date(test_stubs.test_date.setHours(23))
-        const cached_forcast = store.getCityWeather(test_stubs.city_id, futureDateInSameDay)
-        expect(cached_forcast).toEqual(test_stubs.test_day_forcast)
+          it('should add a city', () => {
+            const newCity = {id: "new-city-id", name: "new-city-name"}
+            uut.addCity(newCity)
+            expect(uut.getCities()).toEqual([...Store.localCitiesData, newCity]);
+          });
     })
+
+    describe('forcast items ', () => {
+        it('should return existing results for the same day', async () => {
+            const dateNowStub = jest.fn(() => new Date(test_stubs.test_date).getMilliseconds());
+            global.Date.now = dateNowStub;
+            //@ts-ignore
+            uut.setCityWeather(test_stubs.city_id, test_stubs.test_date, test_stubs.test_day_forcast)
+    
+            const futureDateInSameDay = new Date(test_stubs.test_date.setHours(23))
+            const cached_forcast = uut.getCityWeather(test_stubs.city_id, futureDateInSameDay)
+            expect(cached_forcast).toEqual(test_stubs.test_day_forcast)
+        })
+    })
+
+    
 
 
 }) 

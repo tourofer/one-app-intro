@@ -1,25 +1,32 @@
 import * as remx from 'remx';
-import {City, DayForecast} from '../weather.interface'
-const initialState = {
-//      cities :  [
-//         {
-//             id: "44418",
-//             name: "London"
-//         },
-//         {
-//             id: "2487956",
-//             name: "San Francisco"
-//         }
-    }
-
+import {City, DayForcastInterface} from '../weather.interface'
 const weatherCache = new Map()
+//TODO should move to it's own file
+export const localCitiesData : Array<City> =  [
+    {
+        id: "44418",
+        name: "London"
+    },
+    {
+        id: "2487956",
+        name: "San Francisco"
+    }
+]
+
+
+interface State {
+    cities: Array<City>
+}
+const initialState : State = {
+    cities:  localCitiesData
+    }
 
 const state = remx.state(initialState);
 
 const getters = remx.getters({
-    // getCities() {
-    //     return state.cities;
-    // },
+    getCities() {
+        return state.cities;
+    },
     getCityWeather(cityId: string, date: Date) {
         const key =   buildKey(cityId, date)
         return weatherCache.get(key)
@@ -27,10 +34,10 @@ const getters = remx.getters({
 });
 
 const setters = remx.setters({
-    // addCity(city : City) {
-    //     state.cities = [...state.cities, city];
-    // },
-    setCityWeather(cityId: string, date: Date, dayForcast: DayForecast) {
+    addCity(city : City) {
+        state.cities = [...state.cities, city];
+    },
+    setCityWeather(cityId: string, date: Date, dayForcast: DayForcastInterface) {
         const key =   buildKey(cityId, date)
         weatherCache.set(key, dayForcast)
     }

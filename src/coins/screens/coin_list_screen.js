@@ -27,6 +27,7 @@ const CoinsList = (props) => {
   );
 }
 
+
 const navigateToCoinInfo = (componentId) => {
   Navigation.push(componentId, {
     component: {
