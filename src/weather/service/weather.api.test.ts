@@ -1,12 +1,14 @@
-import * as Api from "./weather.api"
-import { DayForcastInterface} from "../weather.interface"
+import * as uut from "./weather.api"
+import { DayForcastInterface } from "../weather.interface"
+import moment from 'moment-timezone';
 
 describe('Weather Api', () => {
 
     const stub_forcast_request = {
         city_id: "test-city-id",
         city: "Tel-aviv",
-        date: new Date("2013-04-27")
+        date: new Date("2013-04-27"),
+        expected_request_path: "test-city-id/2013/04/27/"
     }
 
     const stub_forcast_response = {
@@ -46,9 +48,8 @@ describe('Weather Api', () => {
         forcast_item_count: 12,
         expected_ordered_ids: [1, 2, 3],
         expected_ids_without_future_item: [1],
-        expected_fetch_url : "https://www.metaweather.com/api/location/test-city-id/2013/04/27/",
-        //taken from london.response.json
-        expect_snapshot_filtered_items_id: [
+        expected_snapshot_filtered_items_id: [
+            //12 top item ids in 'london.response.json'
             366945,
             373220,
             371006,
@@ -64,31 +65,47 @@ describe('Weather Api', () => {
         ]
     }
 
-    function mockResponse(item) {
+
+
+    let mockedWeatherForcastResponse
+    let originalFetch
+
+    beforeAll(() => {
+        originalFetch = global.fetch
         //@ts-ignore
         global.fetch = jest.fn(() =>
             Promise.resolve({
-                json: () => Promise.resolve(item),
+                json: () => Promise.resolve(mockedWeatherForcastResponse),
             })
         );
-    }
+    })
 
-    
+    beforeEach(() => {
+        jest.clearAllMocks();
+        moment.tz.setDefault()
+    })
+
+    afterAll(() => {
+        global.fetch = originalFetch
+    })
+
     it('will call the correct url given a date', async () => {
-        mockResponse(stubResponses.realDataSnapShot)
+        mockedWeatherForcastResponse = (stubResponses.realDataSnapShot)
 
-        await Api.fetchWeather(
+        await uut.fetchWeather(
             stub_forcast_request.city_id,
             stub_forcast_request.city,
             stub_forcast_request.date)
 
-        expect(global.fetch).toBeCalledWith(testConsts.expected_fetch_url)
+        const expectedUrl = uut.base_url + "/" + stub_forcast_request.expected_request_path
+        expect(global.fetch).toHaveBeenCalledTimes(1)
+        expect(global.fetch).toBeCalledWith(expectedUrl)
     })
 
     it('will enrich response data with city name & date fields', async () => {
-        mockResponse(stubResponses.realDataSnapShot)
+        mockedWeatherForcastResponse = (stubResponses.realDataSnapShot)
 
-        const response: DayForcastInterface = await Api.fetchWeather(
+        const response: DayForcastInterface = await uut.fetchWeather(
             stub_forcast_request.city_id,
             stub_forcast_request.city,
             stub_forcast_request.date)
@@ -97,10 +114,10 @@ describe('Weather Api', () => {
         expect(response.date).toEqual(stub_forcast_response.formatted_date)
     })
 
-    it('should limit forcast items to 12 per day', async () => {
-        mockResponse(stubResponses.realDataSnapShot)
+    it('should limit forcast items to at most 12 per day', async () => {
+        mockedWeatherForcastResponse = (stubResponses.realDataSnapShot)
 
-        const response: DayForcastInterface = await Api.fetchWeather(
+        const response: DayForcastInterface = await uut.fetchWeather(
             stub_forcast_request.city_id,
             stub_forcast_request.city,
             stub_forcast_request.date,
@@ -110,10 +127,23 @@ describe('Weather Api', () => {
         expect(response.items.length).toEqual(testConsts.forcast_item_count)
     })
 
-    it('should get items ordered by created date field, in desc order', async () => {
-        mockResponse(stubResponses.unorderedServerResponseSnapshot)
+    it('should accept less then max forcast items if data is not large enough', async () => {
+        mockedWeatherForcastResponse = (stubResponses.unorderedServerResponseSnapshot)
 
-        const response: DayForcastInterface = await Api.fetchWeather(
+        const response: DayForcastInterface = await uut.fetchWeather(
+            stub_forcast_request.city_id,
+            stub_forcast_request.city,
+            stub_forcast_request.date,
+            testConsts.forcast_item_count
+        )
+
+        expect(response.items.length).toEqual(3)
+    })
+
+    it('should get items ordered by created date field, in desc order', async () => {
+        mockedWeatherForcastResponse = stubResponses.unorderedServerResponseSnapshot
+
+        const response: DayForcastInterface = await uut.fetchWeather(
             stub_forcast_request.city_id,
             stub_forcast_request.city,
             stub_forcast_request.date)
@@ -123,8 +153,8 @@ describe('Weather Api', () => {
     })
 
     it('will ignore items created afer the requested date', async () => {
-        mockResponse(stubResponses.responseWithFutureItems)
-        const response: DayForcastInterface = await Api.fetchWeather(
+        mockedWeatherForcastResponse = stubResponses.responseWithFutureItems
+        const response: DayForcastInterface = await uut.fetchWeather(
             stub_forcast_request.city_id,
             stub_forcast_request.city,
             stub_forcast_request.date)
@@ -133,25 +163,58 @@ describe('Weather Api', () => {
         expect(orderdIds).toEqual(testConsts.expected_ids_without_future_item)
     })
 
-    it('should parse dates to nice display hours', async () => {
-        mockResponse(stubResponses.realDataSnapShot)
+    it('should return top items from real datasnap', async () => {
+        const maxItems = 12
 
-        const response: DayForcastInterface = await Api.fetchWeather(
+        const unorderedResponse = mixResponseItems(stubResponses.realDataSnapShot)
+        mockedWeatherForcastResponse = unorderedResponse
+
+        const response: DayForcastInterface = await uut.fetchWeather(
+            stub_forcast_request.city_id,
+            stub_forcast_request.city,
+            stub_forcast_request.date,
+            maxItems)
+
+        const responseTop12ItemsIds = response.items.map(item => item.id)
+        const expectedTop12ItemIds = stubResponses.realDataSnapShot
+            .slice(0, maxItems)
+            .map(item => item.id)
+
+        expect(responseTop12ItemsIds).toEqual(expectedTop12ItemIds)
+    })
+
+    it('should parse dates to local timezone in hh:mm format', async () => {
+        mockedWeatherForcastResponse = stubResponses.realDataSnapShot
+
+        const response: DayForcastInterface = await uut.fetchWeather(
             stub_forcast_request.city_id,
             stub_forcast_request.city,
             stub_forcast_request.date)
 
         const hours = response.items.map((item) => item.created)
-        const ids = response.items.map(item => item.id)
-
-        expect(ids).toEqual(testConsts.expect_snapshot_filtered_items_id)
         expect(hours).toEqual([
-            '22:52', '20:52',
-            '18:52', '16:52',
-            '14:52', '12:52',
-            '10:52', '08:52',
-            '06:52', '04:52',
-            '02:52', '00:52'
+            "01:52",
+            "23:52",
+            "21:52",
+            "19:52",
+            "17:52",
+            "15:52",
+            "13:52",
+            "11:52",
+            "09:52",
+            "07:52",
+            "05:52",
+            "03:52",
         ])
     })
 })
+
+
+// A simple helper function that will pivot the array on it's mid item [1,2,3] => [3,2,1]
+function mixResponseItems<T>(items: Array<T>): Array<T> {
+    const mid = items.length / 2
+    const topItem = items.slice(0, mid)
+    const bottomItems = items.slice(mid + 1, items.length)
+
+    return bottomItems.concat(topItem)
+}

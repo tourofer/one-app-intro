@@ -32,7 +32,7 @@ forcastItemKeyExtractor = (item) => `${item.id}-key`;
 
 renderItem = ({ item }) => {
     return (
-        <Text>{JSON.stringify(item)}</Text>
+        <Text>{item.created}</Text>
     )
 }
 

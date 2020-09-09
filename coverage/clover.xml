@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1599640276516" clover="3.2.0">
+  <project timestamp="1599640276516" name="All files">
+    <metrics statements="16" coveredstatements="16" conditionals="1" coveredconditionals="1" methods="6" coveredmethods="6" elements="23" coveredelements="23" complexity="0" loc="16" ncloc="16" packages="2" files="2" classes="2"/>
+    <package name="weather">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <file name="weather.interface.ts" path="/Users/ofert/projects/ofer_intro/src/weather/weather.interface.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+    </package>
+    <package name="weather.service">
+      <metrics statements="16" coveredstatements="16" conditionals="1" coveredconditionals="1" methods="6" coveredmethods="6"/>
+      <file name="weather.api.ts" path="/Users/ofert/projects/ofer_intro/src/weather/service/weather.api.ts">
+        <metrics statements="16" coveredstatements="16" conditionals="1" coveredconditionals="1" methods="6" coveredmethods="6"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="stmt"/>
+        <line num="14" count="6" type="stmt"/>
+        <line num="16" count="6" type="stmt"/>
+        <line num="17" count="6" type="stmt"/>
+        <line num="20" count="52" type="stmt"/>
+        <line num="23" count="6" type="stmt"/>
+        <line num="31" count="6" type="stmt"/>
+        <line num="32" count="6" type="stmt"/>
+        <line num="35" count="6" type="stmt"/>
+        <line num="36" count="321" type="stmt"/>
+        <line num="37" count="321" type="stmt"/>
+        <line num="47" count="6" type="stmt"/>
+        <line num="48" count="314" type="stmt"/>
+        <line num="49" count="314" type="stmt"/>
+        <line num="50" count="314" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

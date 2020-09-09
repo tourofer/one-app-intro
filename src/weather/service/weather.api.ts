@@ -1,47 +1,48 @@
 import "../weather.interface"
-import { DayForcastInterface, DayForecast, ForcastItemInterface } from "../weather.interface"
+import { DayForcastInterface, ForcastItemInterface } from "../weather.interface";
 import moment from 'moment';
 
+export const base_url = "https://www.metaweather.com/api/location"
 export async function fetchWeather(
     city_id: string,
     city: string,
     date: Date,
     itemsNum: number = 12
 ): Promise<DayForcastInterface> {
-    
-    const response = await fetch(`https://www.metaweather.com/api/location/${city_id}/${parseRequestDate(date)}/`);
+
+    const requestDateFormat = moment(date).utc().format('yyyy/MM/DD')
+    const response = await fetch(`${base_url}/${city_id}/${requestDateFormat}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
 
     const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
     const parsedItems = sortByDate(filteredItems)
         .slice(0, itemsNum)
         .map(item => {
-            return ({ ...item, created: hhmm(new Date(item.created)) })
+            return ({ ...item, created: moment(item.created).format('HH:mm') })
         })
 
-    return new DayForecast(city, parseResponseDate(date), parsedItems)
+    return {
+        city_name: city,
+        date: moment(date).utc().format('DD.MM.yyyy'),
+        items: parsedItems
+    }
 }
 
 function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {
-     const maxAllowedDate = moment(requestDate).utc()
-     maxAllowedDate.set({hour:23,minute:59,second:59,millisecond:999})
-  
+    const maxAllowedDateInUtc = moment(requestDate).utc()
+    maxAllowedDateInUtc.set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
+
 
     return items.filter(item => {
-        const createdDate = moment(item.created).utc()
-        if (createdDate > maxAllowedDate) {
-            console.log("found future item: " + JSON.stringify(item))
-            console.log("createdTime: " + createdDate)
-            console.log("maxAllowed: " + maxAllowedDate)
-
-        }
-        return createdDate <= maxAllowedDate
+        const createdDateInUtc = moment(item.created).utc()
+        return createdDateInUtc <= maxAllowedDateInUtc
     })
 }
 
-function hhmm(date: Date) {
-   return moment(date).utc().format('HH:mm')
-}
+
+// function hhmm(date: Date) {
+//     return moment(date).utc().format('HH:mm')
+// }
 
 function sortByDate(items: Array<ForcastItemInterface>): Array<ForcastItemInterface> {
     return items.sort((a, b) => {
@@ -50,22 +51,6 @@ function sortByDate(items: Array<ForcastItemInterface>): Array<ForcastItemInterf
         return bDate.valueOf() - aDate.valueOf()
     })
 }
-
-function parseRequestDate(date: Date) {
-    const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
-    const [{ value: month }, , { value: day }, , { value: year }] = dateTimeFormat.formatToParts(date)
-
-    return `${year}/${month}/${day}`
-}
-
-function parseResponseDate(date: Date) {
-    const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: '2-digit', day: '2-digit' })
-    const [{ value: month }, , { value: day }, , { value: year }] = dateTimeFormat.formatToParts(date)
-
-    return `${day}.${month}.${year}`
-}
-
-
 
 
 
