@@ -1,52 +1,51 @@
 import React from 'react';
-import { View, Text, FlatList, Button } from 'react-native';
-import {Navigation} from 'react-native-navigation'
-import {ScreenRoutes} from '../../screens'
-import {useConnect} from 'remx'
+import { View, Text, FlatList } from 'react-native';
+import {useNavigationButtonPress} from 'react-native-navigation-hooks';
+import { useConnect } from 'remx'
 import { weatherStore } from '../store/weather.store';
-
+import {Navigator} from '../weather.navigation'
 export default MainWeather = (props) => {
+    useNavigationButtonPress((e) => {
+        if (e.buttonId === 'addCity') {
+            Navigator.show_add_city_modal()
+        }
+    });
+
+    const { cities } = useCountryListConnect()
+
     countryKeyExtractor = (item) => `${item.id}-key`;
 
-    renderItem = ({item}, componentId) => (
+    renderItem = ({ item }, componentId) => (
         <View>
-            <Text onPress={() => handleItemClick(componentId, item)}>{item.name}</Text>
+            <Text onPress={() =>  Navigator.navigateToCityWeather(componentId, item)}>{item.name}</Text>
         </View>
     );
 
-    const {cities} = useCountryListConnect()
-
     return (
         <View>
-            <Button title="London" onPress={() => handleItemClick(props.componentId, countryData[0])} />
+            <Text>Choose city:</Text>
             <FlatList
                 data={cities}
                 keyExtractor={countryKeyExtractor}
                 renderItem={(item) => renderItem(item, props.componentId)}
             />
         </View>
-
     );
 }
 
+MainWeather.options = {
+    topBar: {
+        rightButtons: [
+            {
+                id: 'addCity',
+                testID: 'add-city-btn',
+                text: '+',
+            },
+        ],
+    },
+};
+
 const useCountryListConnect = (props) => useConnect(() => ({
     cities: weatherStore.getCities()
-  })); 
+}));
 
-handleItemClick = (componentId, item) => {
-    Navigation.push(componentId, {
-        component: {
-            name: ScreenRoutes.weather.city_info_route,
-            passProps: {
-                city: item,
-            },
-            options: {
-                topBar: {
-                    title: {
-                        text: item.name,
-                    },
-                },
-            },
-        },
-    });
-}

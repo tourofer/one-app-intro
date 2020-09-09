@@ -3,13 +3,18 @@ import { DayForcastInterface, ForcastItemInterface } from "../weather.interface"
 import moment from 'moment';
 
 export const base_url = "https://www.metaweather.com/api/location"
-export async function fetchWeather(
+
+export const WeatherApi = {
+    fetch_city_weather: (city_id: string, city_name: string, date: Date, itemsNum: number) => fetchWeather(city_id, city_name, date, itemsNum),
+    fetch_city_info : (city_name: string) => fetchCityId(city_name)
+}
+
+async function fetchWeather(
     city_id: string,
     city: string,
     date: Date,
     itemsNum: number = 12
 ): Promise<DayForcastInterface> {
-
     const requestDateFormat = moment(date).utc().format('yyyy/MM/DD')
     const response = await fetch(`${base_url}/${city_id}/${requestDateFormat}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
@@ -26,6 +31,11 @@ export async function fetchWeather(
         date: moment(date).utc().format('DD.MM.yyyy'),
         items: parsedItems
     }
+}
+
+export async function fetchCityId(cityName: String) {
+    const response = await fetch(`${base_url}/search/?query=${cityName}`);
+    return await response.json()
 }
 
 function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {

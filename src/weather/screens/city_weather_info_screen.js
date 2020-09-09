@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import * as Api from '../service/weather.api'
+import {WeatherApi} from '../service/weather.api'
 
 export default CityWeather = (props) => {
     const [response, setResponse] = useState(null)
     useEffect(() => {
         //TODO how do we handle erros?
         async function fetchData() {
-            const response = await Api.fetchWeather(props.city.id, props.city.name, new Date())
+            const response = await WeatherApi.fetch_city_weather(props.city.id, props.city.name, new Date())
             setResponse(response)
         }
         fetchData()

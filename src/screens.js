@@ -8,7 +8,8 @@ export const ScreenRoutes = {
   },
   weather: {
     main_route: 'weather.Main',
-    city_info_route: 'weather.cityInfo'
+    city_info_route: 'weather.cityInfo',
+    add_city_route: 'weather.cityAdd'
   }
 }
 
@@ -28,5 +29,9 @@ export function registerScreens() {
   Navigation.registerComponent(
     ScreenRoutes.weather.city_info_route,
     () => require("./weather/screens/city_weather_info_screen").default
-  )
+  );
+  Navigation.registerComponent(
+    ScreenRoutes.weather.add_city_route,
+    () => require("./weather/screens/add_city_screen").default
+  );
 }
