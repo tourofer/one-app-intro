@@ -9,9 +9,7 @@ export default AddCityScreen = (props) => {
     const [cityResponse, setCityResponse] = useState(null)
     const onChangeText = (async (text) => {
         try {
-            console.log("fetching cities for: " + text)
             const cities =  await AddCityActions.queryCity(text)
-            console.log("got fetch cities : " + cities)
             setCityResponse(cities)
         } catch(e) {
             console.log(e)

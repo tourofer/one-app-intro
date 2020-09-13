@@ -7,6 +7,7 @@ export interface ForcastItemInterface {
     max_temp: number;
     humidity: number;
     predictability: number;
+    img_asset_path: string;
 }
 
 export interface DayForcastInterface {
@@ -15,13 +16,13 @@ export interface DayForcastInterface {
     items: Array<ForcastItemInterface>
 }
 
- export interface City {
+export interface City {
     id: string;
     name: string;
 }
 
 export interface CityResponse {
     query: string,
-    cities : Array<City>
+    cities: Array<City>
 
 }

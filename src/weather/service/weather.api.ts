@@ -1,7 +1,7 @@
 import "../weather.interface"
 import { DayForcastInterface, ForcastItemInterface, City, CityResponse } from "../weather.interface";
 import moment from 'moment';
-
+import * as weatherIconParser from ".//weather.icon.parser"
 export const base_url = "https://www.metaweather.com/api/location"
 
 export async function fetchWeather(
@@ -10,11 +10,12 @@ export async function fetchWeather(
     date: Date,
     itemsNum: number = 12,
 ): Promise<DayForcastInterface> {
+
     const requestDateFormat = moment(date).utc().format('yyyy/MM/DD')
     const response = await fetch(`${base_url}/${city_id}/${requestDateFormat}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
-
     const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
+
     const parsedItems = sortByDate(filteredItems)
         .slice(0, itemsNum)
         .map(item => {
@@ -26,7 +27,8 @@ export async function fetchWeather(
                 min_temp: parseTemp(item.min_temp),
                 max_temp: parseTemp(item.max_temp),
                 humidity: item.humidity,
-                predictability: item.predictability
+                predictability: item.predictability,
+                img_asset_path: weatherIconParser.parseIconAsset(item)
             }
         })
 
@@ -47,7 +49,6 @@ function parseTemp(temp: number) {
 export async function fetchCityId(query: string): Promise<CityResponse> {
     const response = await fetch(`${base_url}/search/?query=${query}`);
     const responseJson = await response.json()
-    console.log(`fetchCityId response: ${responseJson}`)
 
     const cities: Array<City> = responseJson.map((item: any) => ({ id: item.woeid, name: item.title }))
     return {
@@ -60,6 +61,9 @@ function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterfac
     const maxAllowedDateInUtc = moment(requestDate).utc()
     maxAllowedDateInUtc.set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
 
+    if(!items) {
+        return []
+    }
     return items.filter(item => {
         const createdDateInUtc = moment(item.created).utc()
         return createdDateInUtc <= maxAllowedDateInUtc

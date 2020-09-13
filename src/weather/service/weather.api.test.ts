@@ -1,6 +1,90 @@
-import { DayForcastInterface } from "../weather.interface"
+import { DayForcastInterface, ForcastItemInterface } from "../weather.interface"
 import moment from 'moment-timezone';
 import *  as uut from "./weather.api";
+
+
+const stub_forcast_request = {
+    city_id: "test-city-id",
+    city: "Tel-aviv",
+    date: new Date("2013-04-27"),
+    expected_request_path: "test-city-id/2013/04/27/"
+}
+
+const stub_forcast_response = {
+    city: "Tel-aviv",
+    formatted_date: "27.04.2013"
+}
+
+
+const testConsts = {
+    deafult_weather_name: "sun",
+    forcast_item_count: 12,
+    expected_ordered_ids: [1, 2, 3],
+    expected_ids_without_future_item: [1],
+    expected_parsed_temperatures: {
+        min_temp: 1,
+        max_temp: 2.52
+    },
+    expected_snapshot_filtered_items_id: [
+        //12 top item ids in 'london.response.json'
+        366945,
+        373220,
+        371006,
+        363812,
+        359953,
+        364366,
+        367069,
+        362256,
+        361124,
+        358563,
+        351889,
+        357462
+    ]
+}
+
+const stubResponses = {
+    realDataSnapShot: require("../service/call_stubs/london.response.json"),
+    unorderedServerResponseSnapshot: [
+        {
+            id: 3,
+            created: "2012-04-23T22:43:17.585130Z",
+            weather_state_name: testConsts.deafult_weather_name
+        },
+        {
+            id: 2,
+            created: "2012-04-23T22:44:17.585130Z"
+            , weather_state_name: testConsts.deafult_weather_name
+        },
+        {
+            id: 1,
+            created: "2012-04-23T22:45:17.585130Z",
+            weather_state_name: testConsts.deafult_weather_name
+        }
+    ],
+    responseWithFutureItems: [
+        {
+            id: 9999,
+            created: "9999-05-01T22:45:17.585130Z",
+            weather_state_name: testConsts.deafult_weather_name
+        },
+        {
+            id: 1,
+            created: "2012-04-23T22:45:17.585130Z",
+            weather_state_name: testConsts.deafult_weather_name
+        }
+    ],
+    responseWithLongAndShortTemperatures: [
+        {
+            id: 9999,
+            created: "2012-05-01T22:45:17.585130Z",
+            min_temp: 1.0,
+            max_temp: 2.5193423, 
+            weather_state_name: testConsts.deafult_weather_name
+        },
+    ]
+}
+
+
 
 describe('Weather Api', () => {
 
@@ -28,78 +112,6 @@ describe('Weather Api', () => {
 
 
     describe('fetch city weather', () => {
-        const stub_forcast_request = {
-            city_id: "test-city-id",
-            city: "Tel-aviv",
-            date: new Date("2013-04-27"),
-            expected_request_path: "test-city-id/2013/04/27/"
-        }
-
-        const stub_forcast_response = {
-            city: "Tel-aviv",
-            formatted_date: "27.04.2013"
-        }
-
-        const stubResponses = {
-            realDataSnapShot: require("../service/call_stubs/london.response.json"),
-            unorderedServerResponseSnapshot: [
-                {
-                    id: 3,
-                    created: "2012-04-23T22:43:17.585130Z"
-                },
-                {
-                    id: 2,
-                    created: "2012-04-23T22:44:17.585130Z"
-                },
-                {
-                    id: 1,
-                    created: "2012-04-23T22:45:17.585130Z"
-                }
-            ],
-            responseWithFutureItems: [
-                {
-                    id: 9999,
-                    created: "9999-05-01T22:45:17.585130Z"
-                },
-                {
-                    id: 1,
-                    created: "2012-04-23T22:45:17.585130Z"
-                }
-            ],
-            responseWithLongAndShortTemperatures: [
-                {
-                    id: 9999,
-                    created: "2012-05-01T22:45:17.585130Z",
-                    min_temp: 1.0,
-                    max_temp: 2.5193423
-                },
-            ]
-        }
-
-        const testConsts = {
-            forcast_item_count: 12,
-            expected_ordered_ids: [1, 2, 3],
-            expected_ids_without_future_item: [1],
-            expected_parsed_temperatures: {
-                min_temp: 1,
-                max_temp: 2.52
-            },
-            expected_snapshot_filtered_items_id: [
-                //12 top item ids in 'london.response.json'
-                366945,
-                373220,
-                371006,
-                363812,
-                359953,
-                364366,
-                367069,
-                362256,
-                361124,
-                358563,
-                351889,
-                357462
-            ]
-        }
 
         it('will call the correct url given a date', async () => {
             mockServerResponse = (stubResponses.realDataSnapShot)
@@ -245,7 +257,7 @@ describe('Weather Api', () => {
     describe('fetch city by id', () => {
 
         const testConsts = {
-            request_query: "test query" ,
+            request_query: "test query",
             expected_city_info_url: "/search/?query=test-city",
 
         }
@@ -273,10 +285,180 @@ describe('Weather Api', () => {
         it('will include given query in response object', async () => {
             mockServerResponse = stubResponses.server_responses
 
-            const response = await uut. fetchCityId(testConsts.request_query)
+            const response = await uut.fetchCityId(testConsts.request_query)
             expect(response.query).toEqual(testConsts.request_query)
         })
 
+    })
+
+
+
+    describe('weather icon parser', () => {
+        //TODO move this logic to the api test with the parser used as an implementation detail
+        const createFakeWeatherNameItem = (weather_name: string): ForcastItemInterface => {
+            //@ts-ignore
+            return { weather_state_name: weather_name }
+        }
+
+
+        const createWeatherItemResponse = (weatherName: string): Array<ForcastItemInterface> => {
+            //@ts-ignore   
+            return [{
+                created: "2012-04-23T22:43:17.585130Z",
+                weather_state_name: weatherName
+            }]
+        }
+
+
+        const testInputs = {
+            snow: "Snow",
+            sleet: "Sleet",
+            hail: "Hail",
+            thunderstorm: "Thunderstorm",
+            heavy_rain: "Heavy Rain",
+            light_rain: "Light Rain",
+            showers: "Showers",
+            heavy_cloud: "Heavy Cloud",
+            light_cloud: "Light Cloud",
+            clear: "Clear"
+
+        }
+
+        const expectedIconPaths = {
+            snow: "../icons/snow.png",
+            sleet: "../icons/sleet.png",
+            hail: "../icons/hail.png",
+            thunderstorm: "../icons/thunderstorm.png",
+            heavy_rain: "../icons/rain.png",
+            light_rain: "../icons/rain.png",
+            showers: "../icons/rain.png",
+            heavy_cloud: "../icons/heavy_cloud.png",
+            light_cloud: "../icons/light_cloud.png",
+            clear: "../icons/clear.png",
+        }
+
+        it('can parse "Snow" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.snow)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.snow)
+        })
+
+        it('can parse "Sleet" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.sleet)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.sleet)
+        })
+
+        it('can parse "Hail" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.hail)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.hail)
+        })
+
+        it('can parse "Thunderstorm" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.thunderstorm)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.thunderstorm)
+        })
+
+        it('can parse "Heavy Rain" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.heavy_rain)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.heavy_rain)
+        })
+
+        it('can parse "Light Rain" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.light_rain)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.light_rain)
+        })
+
+        it('can parse "Showers" state name', async () => {
+
+            mockServerResponse = createWeatherItemResponse(testInputs.showers)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.showers)
+        })
+
+        it('can parse "Heavy Cloud" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.heavy_cloud)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.heavy_cloud)
+        })
+
+
+        it('can parse "Light Cloud" state name', async () => {
+            mockServerResponse = createWeatherItemResponse(testInputs.light_cloud)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.light_cloud)
+        })
+
+        it('can parse "Clear" state name', async () => {
+
+            mockServerResponse = createWeatherItemResponse(testInputs.clear)
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            const asset = response.items[0].img_asset_path
+            expect(asset).toEqual(expectedIconPaths.clear)
+        })
     })
 
 })

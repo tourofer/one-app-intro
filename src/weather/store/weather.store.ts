@@ -1,7 +1,7 @@
 import * as remx from 'remx';
 import { City, DayForcastInterface } from '../weather.interface'
 const weatherCache = new Map()
-//TODO should move to it's own file
+
 export const localCitiesData: Array<City> = [
     {
         id: "44418",
@@ -26,7 +26,6 @@ const state = remx.state(initialState);
 
 const getters = remx.getters({
     getCities() {
-        console.log("get cities: " + JSON.stringify(state.cities))
         return state.cities;
     },
     getCityWeather(cityId: string, date: Date) {

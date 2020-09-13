@@ -26,8 +26,6 @@ const test_responses = {
     }
 
 describe('weatherActions', () => {
-    let mockCitiesResponse
-
 
     function setupFetchCityResponse(mock: any, mock_second?: any) {
         //TODO SUPPORT MULTIPLE ITEMS
