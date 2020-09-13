@@ -11,6 +11,10 @@
     "start-e2e": "RN_SRC_EXT=e2e.js react-native start"
   },
   "dependencies": {
+    "@react-native-community/blur": "^3.6.0",
+    "@react-native-community/datetimepicker": "^3.0.2",
+    "@react-native-community/netinfo": "^5.9.6",
+    "@react-native-community/picker": "^1.7.1",
     "@types/jest": "^26.0.13",
     "@types/react-native": "^0.63.15",
     "lodash": "^4.17.20",
@@ -18,8 +22,11 @@
     "moment-timezone": "^0.5.31",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-gesture-handler": "^1.8.0",
     "react-native-navigation": "^6.12.2",
     "react-native-navigation-hooks": "^6.1.0",
+    "react-native-reanimated": "^1.13.0",
+    "react-native-ui-lib": "^5.14.0",
     "remx": "^3.0.0-rc.21"
   },
   "devDependencies": {
