@@ -8,18 +8,22 @@ export default AddCityScreen = (props) => {
 
     const [cityResponse, setCityResponse] = useState(null)
     const onChangeText = (async (text) => {
-        //TODO how to cancel previous request?
-        const cities = await  WeatherApi.fetchCityId(text)
-        setCityResponse(cities)
+        try {
+            console.log("fetching cities for: " + text)
+            const cities =  await AddCityActions.queryCity(text)
+            console.log("got fetch cities : " + cities)
+            setCityResponse(cities)
+        } catch(e) {
+            console.log(e)
+        }
     })
 
-    const debounceTextChangeEvent = debounce(onChangeText, 300)
 
-   
-    renderItem = ({ item }) => {
+    renderListItem = ({item} ) => {
+        const onCityItemPressed = () => AddCityActions.addCity(props.componentId, item)
         console.log("rendering: " + JSON.stringify(item))
         return (
-            <Text onPress={() =>  AddCityActions.addCity(props.componentId, item)}>{item.name}</Text>
+            <Text onPress={onCityItemPressed}>{item.name}</Text>
         )
      }
 
@@ -27,8 +31,7 @@ export default AddCityScreen = (props) => {
         <Text>Add city screen</Text>
        
         <TextInput
-            style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-            onChangeText={debounceTextChangeEvent}
+            onChangeText={debounce(onChangeText, 300)}
         />
 
         {cityResponse ?
@@ -36,7 +39,7 @@ export default AddCityScreen = (props) => {
                 <FlatList
                     data={cityResponse}
                     keyExtractor={citiesKeyExtractor}
-                    renderItem={(item) => renderItem(item)} />
+                    renderItem={renderListItem} />
             </View>
             :
             <ActivityIndicator size="large" />

@@ -44,27 +44,35 @@ describe('Weather Api', () => {
             realDataSnapShot: require("../service/call_stubs/london.response.json"),
             unorderedServerResponseSnapshot: [
                 {
-                    "id": 3,
-                    "created": "2012-04-23T22:43:17.585130Z"
+                    id: 3,
+                    created: "2012-04-23T22:43:17.585130Z"
                 },
                 {
-                    "id": 2,
-                    "created": "2012-04-23T22:44:17.585130Z"
+                    id: 2,
+                    created: "2012-04-23T22:44:17.585130Z"
                 },
                 {
-                    "id": 1,
-                    "created": "2012-04-23T22:45:17.585130Z"
+                    id: 1,
+                    created: "2012-04-23T22:45:17.585130Z"
                 }
             ],
             responseWithFutureItems: [
                 {
-                    "id": 9999,
-                    "created": "9999-05-01T22:45:17.585130Z"
+                    id: 9999,
+                    created: "9999-05-01T22:45:17.585130Z"
                 },
                 {
                     id: 1,
-                    "created": "2012-04-23T22:45:17.585130Z"
+                    created: "2012-04-23T22:45:17.585130Z"
                 }
+            ],
+            responseWithLongAndShortTemperatures: [
+                {
+                    id: 9999,
+                    created: "2012-05-01T22:45:17.585130Z",
+                    min_temp: 1.0,
+                    max_temp: 2.5193423
+                },
             ]
         }
 
@@ -72,6 +80,10 @@ describe('Weather Api', () => {
             forcast_item_count: 12,
             expected_ordered_ids: [1, 2, 3],
             expected_ids_without_future_item: [1],
+            expected_parsed_temperatures: {
+                min_temp: 1,
+                max_temp: 2.52
+            },
             expected_snapshot_filtered_items_id: [
                 //12 top item ids in 'london.response.json'
                 366945,
@@ -208,6 +220,18 @@ describe('Weather Api', () => {
             ])
         })
 
+        it('will round temperatures to 2 digit decimal number is longer then 2 digits', async () => {
+            mockServerResponse = stubResponses.responseWithLongAndShortTemperatures
+
+            const response: DayForcastInterface = await uut.fetchWeather(
+                stub_forcast_request.city_id,
+                stub_forcast_request.city,
+                stub_forcast_request.date)
+
+            expect(response.items[0].min_temp).toEqual(testConsts.expected_parsed_temperatures.min_temp)
+            expect(response.items[0].max_temp).toEqual(testConsts.expected_parsed_temperatures.max_temp)
+        })
+
         // A simple helper function that will pivot the array on it's mid item [1,2,3] => [3,2,1]
         function mixResponseItems<T>(items: Array<T>): Array<T> {
             const mid = items.length / 2
@@ -216,14 +240,14 @@ describe('Weather Api', () => {
 
             return bottomItems.concat(topItem)
         }
-
     })
 
     describe('fetch city by id', () => {
 
         const testConsts = {
+            request_query: "test query" ,
             expected_city_info_url: "/search/?query=test-city",
-            
+
         }
 
         const stubResponses = {
@@ -239,12 +263,20 @@ describe('Weather Api', () => {
             expect(global.fetch).toBeCalledWith(expectedUrl)
         })
 
-        it('parses item correctly', async () => {
+        it('parses city items correctly', async () => {
             mockServerResponse = stubResponses.server_responses
 
-            const response = await uut.fetchCityId("test-city")
-            expect(response).toEqual(stubResponses.expected_response)
+            const response = await uut.fetchCityId(testConsts.expected_city_info_url)
+            expect(response.cities).toEqual(stubResponses.expected_response)
         })
+
+        it('will include given query in response object', async () => {
+            mockServerResponse = stubResponses.server_responses
+
+            const response = await uut. fetchCityId(testConsts.request_query)
+            expect(response.query).toEqual(testConsts.request_query)
+        })
+
     })
 
 })

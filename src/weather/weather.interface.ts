@@ -19,3 +19,9 @@ export interface DayForcastInterface {
     id: string;
     name: string;
 }
+
+export interface CityResponse {
+    query: string,
+    cities : Array<City>
+
+}

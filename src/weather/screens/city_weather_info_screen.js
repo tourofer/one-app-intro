@@ -11,12 +11,12 @@ export default CityWeather = (props) => {
             setResponse(response)
         }
         fetchData()
-    }, [])
+    }, [props.city.id])
 
     if (response) {
         console.log("forcast data: " + JSON.stringify(response.items) )
     }
-    //TODO how to do conditional renders?
+    
     return <View>
         {response ?
             <View>

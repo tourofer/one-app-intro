@@ -1,5 +1,5 @@
 import "../weather.interface"
-import { DayForcastInterface, ForcastItemInterface, City } from "../weather.interface";
+import { DayForcastInterface, ForcastItemInterface, City, CityResponse } from "../weather.interface";
 import moment from 'moment';
 
 export const base_url = "https://www.metaweather.com/api/location"
@@ -14,36 +14,27 @@ export async function fetchWeather(
     const response = await fetch(`${base_url}/${city_id}/${requestDateFormat}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
 
-   
-    try {
-        const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
-        const parsedItems = sortByDate(filteredItems)
-            .slice(0, itemsNum)
-            .map(item => {
-                return  {
-                    id: item.id,
-                    created : moment(item.created).format('HH:mm') ,
-                    weather_state_name : item.weather_state_name,
-                    wind_direction_compass: item.wind_direction_compass,
-                    //TODO test temp parsing
-                    min_temp: parseTemp(item.min_temp),
-                    max_temp: parseTemp(item.max_temp), 
-                    humidity: item.humidity,
-                    predictability: item.predictability
-                }
-                
-            })
-    
-        return {
-            city_name: city,
-            date: moment(date).utc().format('DD.MM.yyyy'),
-            items: parsedItems
-        }
-    } catch (e) {
-        console.log("error parsing respose: " + e)
-        return null
+    const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
+    const parsedItems = sortByDate(filteredItems)
+        .slice(0, itemsNum)
+        .map(item => {
+            return {
+                id: item.id,
+                created: moment(item.created).format('HH:mm'),
+                weather_state_name: item.weather_state_name,
+                wind_direction_compass: item.wind_direction_compass,
+                min_temp: parseTemp(item.min_temp),
+                max_temp: parseTemp(item.max_temp),
+                humidity: item.humidity,
+                predictability: item.predictability
+            }
+        })
+
+    return {
+        city_name: city,
+        date: moment(date).utc().format('DD.MM.yyyy'),
+        items: parsedItems
     }
-    
 }
 
 function parseTemp(temp: number) {
@@ -53,11 +44,16 @@ function parseTemp(temp: number) {
     return null
 }
 
-export async function fetchCityId(cityName: string) : Promise<Array<City>> {
-    const response = await fetch(`${base_url}/search/?query=${cityName}`);
-    const responseJson =  await response.json()
+export async function fetchCityId(query: string): Promise<CityResponse> {
+    const response = await fetch(`${base_url}/search/?query=${query}`);
+    const responseJson = await response.json()
+    console.log(`fetchCityId response: ${responseJson}`)
 
-    return responseJson.map((item : any) => ({id: item.woeid, name: item.title}))
+    const cities: Array<City> = responseJson.map((item: any) => ({ id: item.woeid, name: item.title }))
+    return {
+        query: query,
+        cities: cities,
+    }
 }
 
 function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {
@@ -69,11 +65,6 @@ function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterfac
         return createdDateInUtc <= maxAllowedDateInUtc
     })
 }
-
-
-// function hhmm(date: Date) {
-//     return moment(date).utc().format('HH:mm')
-// }
 
 function sortByDate(items: Array<ForcastItemInterface>): Array<ForcastItemInterface> {
     return items.sort((a, b) => {
