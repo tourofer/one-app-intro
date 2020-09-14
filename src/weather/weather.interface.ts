@@ -24,5 +24,4 @@ export interface City {
 export interface CityResponse {
     query: string,
     cities: Array<City>
-
 }

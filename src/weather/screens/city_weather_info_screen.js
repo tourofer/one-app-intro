@@ -45,17 +45,20 @@ const WeatherListItem = ({ item }) => {
         onPress={() => this.pushViewPostScreen(item)}
     >
         <ListItem.Part left>
-
             <Image source={item.img_asset_path}
-                style={styles.image}
-            />
+                style={styles.image}/>
         </ListItem.Part>
-        <ListItem.Part middle column containerStyle={[styles.border, { paddingRight: 17 }]}>
+        <ListItem.Part middle column containerStyle={[styles.border, { flex: 1,  paddingRight: 17 }]}>
             <ListItem.Part containerStyle={{ marginBottom: 3 }}>
-                <Text dark10 text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>{item.weather_state_name}</Text>
+                <Text dark10 text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>{`${item.weather_state_name}`}</Text>
             </ListItem.Part>
-
+            <ListItem.Part>
+                <Text dark10 text80 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>{`Temp. ${item.min_temp}°C - ${item.max_temp}°C` }</Text>
+            </ListItem.Part>
         </ListItem.Part>
+        <ListItem.Part right>
+                <Text dark10 text80 style={{  marginRight: 10 }} numberOfLines={1}>{item.created}</Text>
+            </ListItem.Part>
     </ListItem>
 }
 

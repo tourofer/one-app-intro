@@ -321,7 +321,7 @@ describe('Weather Api', () => {
             return {testUri: `../../../src/weather/icons/${asset}`}
         }  
 
-        it('can parse "Snow" state name', async () => {
+        it('will provide icon for "Snow" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.snow)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -333,7 +333,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.snow)
         })
 
-        it('can parse "Sleet" state name', async () => {
+        it('will provide icon for "Sleet" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.sleet)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -345,7 +345,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.sleet)
         })
 
-        it('can parse "Hail" state name', async () => {
+        it('will provide icon for "Hail" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.hail)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -357,7 +357,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.hail)
         })
 
-        it('can parse "Thunderstorm" state name', async () => {
+        it('will provide icon for "Thunderstorm" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.thunderstorm)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -369,7 +369,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.thunderstorm)
         })
 
-        it('can parse "Heavy Rain" state name', async () => {
+        it('will provide icon for "Heavy Rain" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.heavy_rain)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -381,7 +381,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.heavy_rain)
         })
 
-        it('can parse "Light Rain" state name', async () => {
+        it('will provide icon for "Light Rain" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.light_rain)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -393,7 +393,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.light_rain)
         })
 
-        it('can parse "Showers" state name', async () => {
+        it('will provide icon for "Showers" state name', async () => {
 
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.showers)
 
@@ -406,7 +406,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.showers)
         })
 
-        it('can parse "Heavy Cloud" state name', async () => {
+        it('will provide icon for "Heavy Cloud" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.heavy_cloud)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -419,7 +419,7 @@ describe('Weather Api', () => {
         })
 
 
-        it('can parse "Light Cloud" state name', async () => {
+        it('will provide icon for "Light Cloud" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.light_cloud)
 
             const response: DayForcastInterface = await uut.fetchWeather(
@@ -431,8 +431,7 @@ describe('Weather Api', () => {
             expect(asset).toEqual(expectedIconPaths.light_cloud)
         })
 
-        it('can parse "Clear" state name', async () => {
-
+        it('will provide icon for "Clear" state name', async () => {
             mockServerResponse = createWeatherItemResponse(WeatherStateNames.clear)
 
             const response: DayForcastInterface = await uut.fetchWeather(
