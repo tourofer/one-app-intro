@@ -309,6 +309,8 @@ PODS:
     - React
     - React-RCTImage
     - React-RCTText
+  - ReactNativeUiLib (3.0.4):
+    - React
   - RNCPicker (1.7.1):
     - React
   - RNDateTimePicker (3.0.2):
@@ -371,6 +373,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeNavigation (from `../node_modules/react-native-navigation`)
+  - ReactNativeUiLib (from `../node_modules/react-native-ui-lib/lib`)
   - "RNCPicker (from `../node_modules/@react-native-community/picker`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -449,6 +452,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeNavigation:
     :path: "../node_modules/react-native-navigation"
+  ReactNativeUiLib:
+    :path: "../node_modules/react-native-ui-lib/lib"
   RNCPicker:
     :path: "../node_modules/@react-native-community/picker"
   RNDateTimePicker:
@@ -500,6 +505,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 4d2e726957f4087449739b595f107c0d4b6c2d2d
   ReactCommon: a0a1edbebcac5e91338371b72ffc66aa822792ce
   ReactNativeNavigation: aefc8debafb4a374575adafb44a3352b9d5b618a
+  ReactNativeUiLib: cde7263a7d308b60161cd286f95c9433e79f2f7d
   RNCPicker: a2bf7bad059f23de52add203c3c5a3bc5b5239d8
   RNDateTimePicker: 3a1783e63fcb6e2b162b08a4321db030d23accff
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39

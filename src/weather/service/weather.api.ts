@@ -4,6 +4,21 @@ import moment from 'moment';
 import * as weatherIconParser from ".//weather.icon.parser"
 export const base_url = "https://www.metaweather.com/api/location"
 
+
+export const WeatherStateNames = {
+    snow: "Snow",
+    sleet: "Sleet",
+    hail: "Hail",
+    thunderstorm: "Thunderstorm",
+    heavy_rain: "Heavy Rain",
+    light_rain: "Light Rain",
+    showers: "Showers",
+    heavy_cloud: "Heavy Cloud",
+    light_cloud: "Light Cloud",
+    clear: "Clear"
+
+}
+
 export async function fetchWeather(
     city_id: string,
     city: string,

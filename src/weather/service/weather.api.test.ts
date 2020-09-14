@@ -1,6 +1,7 @@
 import { DayForcastInterface, ForcastItemInterface } from "../weather.interface"
 import moment from 'moment-timezone';
 import *  as uut from "./weather.api";
+import {WeatherStateNames} from "./weather.api"
 
 
 const stub_forcast_request = {
@@ -294,13 +295,7 @@ describe('Weather Api', () => {
 
 
     describe('weather icon parser', () => {
-        //TODO move this logic to the api test with the parser used as an implementation detail
-        const createFakeWeatherNameItem = (weather_name: string): ForcastItemInterface => {
-            //@ts-ignore
-            return { weather_state_name: weather_name }
-        }
-
-
+       
         const createWeatherItemResponse = (weatherName: string): Array<ForcastItemInterface> => {
             //@ts-ignore   
             return [{
@@ -308,37 +303,26 @@ describe('Weather Api', () => {
                 weather_state_name: weatherName
             }]
         }
-
-
-        const testInputs = {
-            snow: "Snow",
-            sleet: "Sleet",
-            hail: "Hail",
-            thunderstorm: "Thunderstorm",
-            heavy_rain: "Heavy Rain",
-            light_rain: "Light Rain",
-            showers: "Showers",
-            heavy_cloud: "Heavy Cloud",
-            light_cloud: "Light Cloud",
-            clear: "Clear"
-
-        }
-
+    
         const expectedIconPaths = {
-            snow: "../icons/snow.png",
-            sleet: "../icons/sleet.png",
-            hail: "../icons/hail.png",
-            thunderstorm: "../icons/thunderstorm.png",
-            heavy_rain: "../icons/rain.png",
-            light_rain: "../icons/rain.png",
-            showers: "../icons/rain.png",
-            heavy_cloud: "../icons/heavy_cloud.png",
-            light_cloud: "../icons/light_cloud.png",
-            clear: "../icons/clear.png",
+            snow: buildStubAssetsPath("snow.png"),
+            sleet: buildStubAssetsPath("sleet.png"),
+            hail: buildStubAssetsPath("hail.png"),
+            thunderstorm: buildStubAssetsPath("thunderstorm.png"),
+            heavy_rain: buildStubAssetsPath("rain.png"),
+            light_rain: buildStubAssetsPath("rain.png"),
+            showers: buildStubAssetsPath("rain.png"),
+            heavy_cloud: buildStubAssetsPath("heavy_cloud.png"),
+            light_cloud: buildStubAssetsPath("light_cloud.png"),
+            clear: buildStubAssetsPath("clear.png"),
         }
+
+        function buildStubAssetsPath(asset : string){
+            return {testUri: `../../../src/weather/icons/${asset}`}
+        }  
 
         it('can parse "Snow" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.snow)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.snow)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -350,7 +334,7 @@ describe('Weather Api', () => {
         })
 
         it('can parse "Sleet" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.sleet)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.sleet)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -362,7 +346,7 @@ describe('Weather Api', () => {
         })
 
         it('can parse "Hail" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.hail)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.hail)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -374,7 +358,7 @@ describe('Weather Api', () => {
         })
 
         it('can parse "Thunderstorm" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.thunderstorm)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.thunderstorm)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -386,7 +370,7 @@ describe('Weather Api', () => {
         })
 
         it('can parse "Heavy Rain" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.heavy_rain)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.heavy_rain)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -398,7 +382,7 @@ describe('Weather Api', () => {
         })
 
         it('can parse "Light Rain" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.light_rain)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.light_rain)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -411,7 +395,7 @@ describe('Weather Api', () => {
 
         it('can parse "Showers" state name', async () => {
 
-            mockServerResponse = createWeatherItemResponse(testInputs.showers)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.showers)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -423,7 +407,7 @@ describe('Weather Api', () => {
         })
 
         it('can parse "Heavy Cloud" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.heavy_cloud)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.heavy_cloud)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -436,7 +420,7 @@ describe('Weather Api', () => {
 
 
         it('can parse "Light Cloud" state name', async () => {
-            mockServerResponse = createWeatherItemResponse(testInputs.light_cloud)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.light_cloud)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -449,7 +433,7 @@ describe('Weather Api', () => {
 
         it('can parse "Clear" state name', async () => {
 
-            mockServerResponse = createWeatherItemResponse(testInputs.clear)
+            mockServerResponse = createWeatherItemResponse(WeatherStateNames.clear)
 
             const response: DayForcastInterface = await uut.fetchWeather(
                 stub_forcast_request.city_id,
@@ -457,6 +441,7 @@ describe('Weather Api', () => {
                 stub_forcast_request.date)
 
             const asset = response.items[0].img_asset_path
+            
             expect(asset).toEqual(expectedIconPaths.clear)
         })
     })
