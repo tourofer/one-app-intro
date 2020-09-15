@@ -1,34 +1,42 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, FlatList, ActivityIndicator } from 'react-native'
+import { TextInput, FlatList, StyleSheet, ActivityIndicator } from 'react-native'
 import { debounce } from 'lodash'
-import *  as WeatherApi from '../service/weather.api'
 import * as AddCityActions from '../service/weather.actions'
+import { View, Text } from 'react-native-ui-lib'
 
 export default AddCityScreen = (props) => {
 
+    let lastQuery  
+
     const [cityResponse, setCityResponse] = useState(null)
     const onChangeText = (async (text) => {
+        if (text === "") {
+            return 
+        }
+        lastQuery = text
         try {
-            const cities =  await AddCityActions.queryCity(text)
-            setCityResponse(cities)
-        } catch(e) {
+            const cityResponse = await AddCityActions.queryCity(text)
+            console.log(`last query: ${lastQuery}, response query: ${cityResponse.query}`)
+            if (cityResponse.query === lastQuery) {
+                setCityResponse(cityResponse.cities)
+            }
+        } catch (e) {
             console.log(e)
         }
     })
 
 
-    renderListItem = ({item} ) => {
+    renderListItem = ({ item }) => {
         const onCityItemPressed = () => AddCityActions.addCity(props.componentId, item)
         console.log("rendering: " + JSON.stringify(item))
         return (
             <Text onPress={onCityItemPressed}>{item.name}</Text>
         )
-     }
+    }
 
     return <View>
-        <Text>Add city screen</Text>
-       
-        <TextInput
+        <TextInput style={styles.searchBar}
+            placeholder="Enter city name"
             onChangeText={debounce(onChangeText, 300)}
         />
 
@@ -41,7 +49,7 @@ export default AddCityScreen = (props) => {
             </View>
             :
             <ActivityIndicator size="large" />
-        }   
+        }
 
     </View>
 }
@@ -51,8 +59,18 @@ citiesKeyExtractor = (city) => `${city.id}-key`;
 
 AddCityScreen.options = {
     topBar: {
-      title: {
-        text: 'Search cities',
-      },
+        title: {
+            text: 'Search cities',
+        },
     },
-  };
+};
+
+const styles = StyleSheet.create({
+    searchBar: {
+        fontSize: 24,
+        margin: 10,
+        width: '90%',
+        height: 50,
+        backgroundColor: 'white',
+    },
+});

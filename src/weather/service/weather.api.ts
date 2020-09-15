@@ -1,8 +1,10 @@
 import "../weather.interface"
 import { DayForcastInterface, ForcastItemInterface, City, CityResponse } from "../weather.interface";
 import moment from 'moment';
-import * as weatherIconParser from ".//weather.icon.parser"
-export const base_url = "https://www.metaweather.com/api/location"
+import * as weatherIconParser from "./weather.icon.parser"
+
+export const base_weather_api_url = "https://www.metaweather.com/api/location"
+export const base_app_server_url = "http://localhost:3000"
 
 
 export const WeatherStateNames = {
@@ -16,8 +18,28 @@ export const WeatherStateNames = {
     heavy_cloud: "Heavy Cloud",
     light_cloud: "Light Cloud",
     clear: "Clear"
-
 }
+
+export async function fetchCitiesList(): Promise<Array<City>> {
+    const response = await fetch(`${base_weather_api_url}/cities`);
+    const responseJson = await response.json()
+
+    console.log(responseJson)
+    const cities : Array<City> = responseJson.cities
+    return cities    
+}
+
+export async function fetchCityId(query: string): Promise<CityResponse> {
+    const response = await fetch(`${base_weather_api_url}/search/?query=${query}`);
+    const responseJson = await response.json()
+
+    const cities: Array<City> = responseJson.map((item: any) => ({ id: item.woeid, name: item.title }))
+    return {
+        query: query,
+        cities: cities,
+    }
+}
+
 
 export async function fetchWeather(
     city_id: string,
@@ -27,22 +49,18 @@ export async function fetchWeather(
 ): Promise<DayForcastInterface> {
 
     const requestDateFormat = moment(date).utc().format('yyyy/MM/DD')
-    const response = await fetch(`${base_url}/${city_id}/${requestDateFormat}/`);
+    const response = await fetch(`${base_weather_api_url}/${city_id}/${requestDateFormat}/`);
     const responseJson: Array<ForcastItemInterface> = await response.json()
     const filteredItems = filterForcastCreatedAfterRequestedDate(responseJson, date)
 
     const parsedItems = sortByDate(filteredItems)
         .slice(0, itemsNum)
-        .map(item => {
+        .map( (item : ForcastItemInterface) => {
             return {
-                id: item.id,
+                ...item, 
                 created: moment(item.created).format('HH:mm'),
-                weather_state_name: item.weather_state_name,
-                wind_direction_compass: item.wind_direction_compass,
                 min_temp: parseTemp(item.min_temp),
                 max_temp: parseTemp(item.max_temp),
-                humidity: item.humidity,
-                predictability: item.predictability,
                 img_asset_path: weatherIconParser.parseIconAsset(item)
             }
         })
@@ -61,28 +79,18 @@ function parseTemp(temp: number) {
     return null
 }
 
-export async function fetchCityId(query: string): Promise<CityResponse> {
-    const response = await fetch(`${base_url}/search/?query=${query}`);
-    const responseJson = await response.json()
-
-    const cities: Array<City> = responseJson.map((item: any) => ({ id: item.woeid, name: item.title }))
-    return {
-        query: query,
-        cities: cities,
-    }
-}
-
 function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {
     const maxAllowedDateInUtc = moment(requestDate).utc()
     maxAllowedDateInUtc.set({ hour: 23, minute: 59, second: 59, millisecond: 999 })
 
-    if(!items) {
-        return []
+    if (items && items.length) {
+        return items.filter(item => {
+            const createdDateInUtc = moment(item.created).utc()
+            return createdDateInUtc <= maxAllowedDateInUtc
+        })
     }
-    return items.filter(item => {
-        const createdDateInUtc = moment(item.created).utc()
-        return createdDateInUtc <= maxAllowedDateInUtc
-    })
+
+    return []
 }
 
 function sortByDate(items: Array<ForcastItemInterface>): Array<ForcastItemInterface> {

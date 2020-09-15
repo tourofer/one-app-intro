@@ -24,14 +24,14 @@ export default MainWeather = (props) => {
                 height={77.5}
                 onPress={() => Navigator.navigateToCityWeather(componentId, item)} >
                 <ListItem.Part>
-                    <Text dark10 text60 style={{marginLeft: 10 }}>{item.name}</Text>
+                    <Text dark10 text60 style={{marginLeft: 10}}>{item.name}</Text>
                 </ListItem.Part>
             </ListItem>
         );
 
     return (
         <View>
-            <Text dark10 text80 style={{marginLeft:8}}>Choose city:</Text>
+            <Text dark10 text80 style={{marginLeft:8,  marginTop: 8}}>Choose city:</Text>
             <FlatList
                 data={cities}
                 keyExtractor={countryKeyExtractor}

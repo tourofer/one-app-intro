@@ -32,5 +32,3 @@ export async function getCoinList(fetch: any) : Promise<CoinsData>  {
  function extractPrice(currency : any) : Price {
      return ({symbol: currency.symbol, rate: currency.rate})
  }
- //TODO how to add type to this call
-// const extractPrice = (currency : any) => ({symbol: currency.symbol, rate: currency.rate})
