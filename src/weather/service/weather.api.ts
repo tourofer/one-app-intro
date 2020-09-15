@@ -5,7 +5,7 @@ import * as weatherIconParser from "./weather.icon.parser"
 
 export const base_weather_api_url = "https://www.metaweather.com/api/location"
 export const base_app_server_url = "http://localhost:3000"
-
+export const city_list_url = base_app_server_url + "/cities"
 
 export const WeatherStateNames = {
     snow: "Snow",
@@ -21,14 +21,22 @@ export const WeatherStateNames = {
 }
 
 export async function fetchCitiesList(): Promise<Array<City>> {
-    const response = await fetch(`${base_weather_api_url}/cities`);
+    const response = await fetch(city_list_url);
     const responseJson = await response.json()
-
-    console.log(responseJson)
-    const cities : Array<City> = responseJson.cities
-    return cities    
+    return responseJson
 }
 
+export async function addCity(city: City): Promise<any> {
+    const response = await fetch(city_list_url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(city),
+    });
+    return response.json()
+}
 export async function fetchCityId(query: string): Promise<CityResponse> {
     const response = await fetch(`${base_weather_api_url}/search/?query=${query}`);
     const responseJson = await response.json()
@@ -39,7 +47,6 @@ export async function fetchCityId(query: string): Promise<CityResponse> {
         cities: cities,
     }
 }
-
 
 export async function fetchWeather(
     city_id: string,
@@ -55,9 +62,9 @@ export async function fetchWeather(
 
     const parsedItems = sortByDate(filteredItems)
         .slice(0, itemsNum)
-        .map( (item : ForcastItemInterface) => {
+        .map((item: ForcastItemInterface) => {
             return {
-                ...item, 
+                ...item,
                 created: moment(item.created).format('HH:mm'),
                 min_temp: parseTemp(item.min_temp),
                 max_temp: parseTemp(item.max_temp),
@@ -76,7 +83,7 @@ function parseTemp(temp: number) {
     if (temp) {
         return parseFloat(temp.toFixed(2))
     }
-    return null
+    return temp
 }
 
 function filterForcastCreatedAfterRequestedDate(items: Array<ForcastItemInterface>, requestDate: Date): Array<ForcastItemInterface> {

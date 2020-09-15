@@ -16,7 +16,6 @@ export default AddCityScreen = (props) => {
         lastQuery = text
         try {
             const cityResponse = await AddCityActions.queryCity(text)
-            console.log(`last query: ${lastQuery}, response query: ${cityResponse.query}`)
             if (cityResponse.query === lastQuery) {
                 setCityResponse(cityResponse.cities)
             }
@@ -28,7 +27,6 @@ export default AddCityScreen = (props) => {
 
     renderListItem = ({ item }) => {
         const onCityItemPressed = () => AddCityActions.addCity(props.componentId, item)
-        console.log("rendering: " + JSON.stringify(item))
         return (
             <Text onPress={onCityItemPressed}>{item.name}</Text>
         )

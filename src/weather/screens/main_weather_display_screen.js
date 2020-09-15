@@ -1,17 +1,22 @@
-import React from 'react';
+import React, {useEffect, useCallback} from 'react';
 import { FlatList } from 'react-native';
 import { useNavigationButtonPress } from 'react-native-navigation-hooks';
 import { useConnect } from 'remx'
 import { weatherStore } from '../store/weather.store';
 import { Navigator } from '../weather.navigation'
 import { View, Text, ListItem, Colors } from 'react-native-ui-lib'
-
+import * as WeatherActions from '../service/weather.actions'
 export default MainWeather = (props) => {
-    useNavigationButtonPress((e) => {
-        if (e.buttonId === 'addCity') {
-            Navigator.show_add_city_modal()
-        }
-    }, props.componentId);
+    useEffect(() => {
+        WeatherActions.fetchCitiesList()
+    }, [])
+
+
+    const handleNavigationButtonPress = useCallback(() => {
+        Navigator.show_add_city_modal()
+      }, [])
+
+    useNavigationButtonPress(handleNavigationButtonPress, props.componentId, 'addCity' );
 
     const { cities } = useCountryListConnect()
 

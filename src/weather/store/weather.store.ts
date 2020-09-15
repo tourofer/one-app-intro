@@ -35,6 +35,9 @@ const getters = remx.getters({
 });
 
 const setters = remx.setters({
+    setCityList(cities: City[]) {
+        state.cities = cities
+    },
     addCity(city: City) {
         if (!existingCityIds.has(city.id)) {
             existingCityIds.add(city.id)

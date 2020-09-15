@@ -35,10 +35,18 @@ describe('Weather Api', () => {
         }
 
         const expected_city_response = [fakeCity]
-
+        const citiedResourcePath = "/cities"
         const fakeCitiesListResponse = {
             cities: [fakeCity]
         }
+
+        it('will call correct url', async () => {
+            mockServerResponse = fakeCitiesListResponse
+
+            await uut.fetchCitiesList()
+            const expectedUrl = uut.base_app_server_url + citiedResourcePath
+            expect(global.fetch).toBeCalledWith(expectedUrl)
+        })
 
         it('will return cities response', async () => {
             mockServerResponse = fakeCitiesListResponse

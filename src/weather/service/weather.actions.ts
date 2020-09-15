@@ -4,16 +4,24 @@ import * as WeatherApi from "./weather.api"
 import { Navigation } from "react-native-navigation"
 
 
-// export async function fetchCitiesList() : Promise<Array<City>> {
-//     try {
-//         await WeatherApi.fetchCities()
-//     }
-// }
-export async function queryCity(query: string): Promise<CityResponse>  {
-    return WeatherApi.fetchCityId(query) 
+export async function fetchCitiesList() {
+    try {
+        const cities: Array<City> = await WeatherApi.fetchCitiesList()
+        weatherStore.setCityList(cities)
+    } catch (e) {
+        console.log(e)
+    }
+}
+export async function queryCity(query: string): Promise<CityResponse> {
+    return WeatherApi.fetchCityId(query)
 }
 
 export async function addCity(componentId: string, city: City) {
-    weatherStore.addCity(city)
-    Navigation.dismissModal(componentId);
+    try {
+        const serverCity: City = await WeatherApi.addCity(city)
+        weatherStore.addCity(serverCity)
+        Navigation.dismissModal(componentId);
+    } catch (e) {
+        console.log(e)
+    }
 }
