@@ -7,7 +7,7 @@
       "build": "xcodebuild -workspace ios/ofer_intro.xcworkspace -scheme ofer_intro -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
       "type": "ios.simulator",
       "device": {
-        "type": "iPhone 11 Pro"
+        "type": "iPhone 8"
       }
     }
   }

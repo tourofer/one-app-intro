@@ -6,6 +6,7 @@ import { View, Text } from 'react-native-ui-lib'
 
 export default AddCityScreen = (props) => {
 
+    console.log(`add city component id: ${props.componentId}`)
     let lastQuery  
 
     const [cityResponse, setCityResponse] = useState(null)

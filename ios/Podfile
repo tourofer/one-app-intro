@@ -8,6 +8,10 @@ target 'ofer_intro' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  pod 'ReactNativeUiLib', :path => '../node_modules/react-native-ui-lib'
+
   target 'ofer_introTests' do
     inherit! :complete
     # Pods for testing
