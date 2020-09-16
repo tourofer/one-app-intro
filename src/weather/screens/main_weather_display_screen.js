@@ -11,6 +11,9 @@ export default MainWeather = (props) => {
         WeatherActions.fetchCitiesList()
     }, [])
 
+    //TODO this is not working and has issues when returning to wheather info
+    
+    // from : https://github.com/underscopeio/react-native-navigation-hooks/blob/ae938aec76bc9dbbd340c4120cd548488e1bcf12/example/src/screens/RootScreen.tsx
 
     const handleNavigationButtonPress = useCallback(() => {
         Navigator.show_add_city_modal()

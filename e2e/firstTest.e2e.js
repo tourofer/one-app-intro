@@ -3,11 +3,11 @@ describe('Example', () => {
     await device.reloadReactNative();
   });
 
-  it('should display coin list', async () => {
+  it('should should display city weather', async () => {
     await expect(element(by.text('Coin List Screen'))).toBeVisible();
   });
 
-  it('should show coin info screen after tap', async () => {
+  it('should add a city', async () => {
     await element(by.id('test-button')).tap();
     await expect(element(by.text('Coin Info Screen'))).toBeVisible();
   });
