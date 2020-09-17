@@ -10,7 +10,7 @@ target 'ofer_intro' do
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
 
-  pod 'ReactNativeUiLib', :path => '../node_modules/react-native-ui-lib'
+  pod 'ReactNativeUiLib', :path => '../node_modules/react-native-ui-lib/lib'
 
   target 'ofer_introTests' do
     inherit! :complete
