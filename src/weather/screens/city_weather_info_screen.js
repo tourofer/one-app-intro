@@ -12,26 +12,26 @@ export default CityWeather = (props) => {
             setResponse(response)
         }
         fetchData()
-    }, [props.city.id])
+    }, [])
 
+
+    forcastItemKeyExtractor = (item) => `${item.id}-key`;
+
+    renderItem = ({ item }) => {
+        return <WeatherListItem item={item} />
+    }
 
     if (!response) {
         return <LoaderScreen />
     }
-    return <View>
-        <Text text100>We should render list here</Text>
-        <FlatList
-            data={response.items}
-            keyExtractor={forcastItemKeyExtractor}
-            renderItem={renderItem} />
-    </View>
+
+    return <FlatList
+        key="forcast-list-key"
+        data={response.items}
+        keyExtractor={this.forcastItemKeyExtractor}
+        renderItem={this.renderItem} />
 }
 
-forcastItemKeyExtractor = (item) => `${item.id}-key`;
-
-renderItem = ({ item }) => {
-    return <WeatherListItem item={item} />
-}
 
 const WeatherListItem = ({ item }) => {
     return <ListItem
@@ -39,7 +39,7 @@ const WeatherListItem = ({ item }) => {
         activeBackgroundColor={Colors.purple70}
         activeOpacity={0.1}
         height={77.5}>
-            
+
         <ListItem.Part left>
             <Image source={item.img_asset_path}
                 style={styles.image} />

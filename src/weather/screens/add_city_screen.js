@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
-import { TextInput, FlatList, StyleSheet, ActivityIndicator } from 'react-native'
+import { FlatList, StyleSheet, ActivityIndicator } from 'react-native'
 import { debounce } from 'lodash'
 import * as AddCityActions from '../service/weather.actions'
-import { View, Text } from 'react-native-ui-lib'
+import { View, Text, TextField, ListItem, Colors } from 'react-native-ui-lib'
 
 export default AddCityScreen = (props) => {
 
-    console.log(`add city component id: ${props.componentId}`)
-    let lastQuery  
+    let lastQuery
 
     const [cityResponse, setCityResponse] = useState(null)
     const onChangeText = (async (text) => {
         if (text === "") {
-            return 
+            return
         }
         lastQuery = text
         try {
@@ -26,18 +25,38 @@ export default AddCityScreen = (props) => {
     })
 
 
+
     renderListItem = ({ item }) => {
         const onCityItemPressed = () => AddCityActions.addCity(props.componentId, item)
-        return (
-            <Text onPress={onCityItemPressed}>{item.name}</Text>
-        )
+        return <ListItem
+            bg-red70
+            testID={`weatherItem-${item.id}`}
+            activeBackgroundColor={Colors.purple70}
+            activeOpacity={0.1}
+            height={77.5}>
+
+            <ListItem.Part containerStyle={[{ flex: 1 }]}>
+                <Text flex text70
+                    testID={`addCityItem-${item.id}`}
+                    onPress={onCityItemPressed}>{item.name}</Text>
+            </ListItem.Part>
+        </ListItem>
+
+
     }
 
-    return <View>
-        <TextInput style={styles.searchBar}
+    return <View flex>
+
+        <TextField
+            testID="citySearchBox"
+            text70
+            containerStyle={{ marginBottom: 12 }}
+            floatingPlaceholder
+            autoFocus={true}
             placeholder="Enter city name"
             onChangeText={debounce(onChangeText, 300)}
-        />
+            floatOnFocus />
+
 
         {cityResponse ?
             <View>
@@ -47,7 +66,7 @@ export default AddCityScreen = (props) => {
                     renderItem={renderListItem} />
             </View>
             :
-            <ActivityIndicator size="large" />
+            <View />
         }
 
     </View>

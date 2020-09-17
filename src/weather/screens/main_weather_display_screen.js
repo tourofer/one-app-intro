@@ -49,10 +49,11 @@ export default MainWeather = (props) => {
             <View>
                 <Text dark10 text80 style={{ marginLeft: 8, marginTop: 8 }}>Choose city:</Text>
                 <FlatList
+                    key="city-list-key"
                     testID="cities-list"
                     data={cities}
-                    keyExtractor={countryKeyExtractor}
-                    renderItem={renderItem}
+                    keyExtractor={this.countryKeyExtractor}
+                    renderItem={this.renderItem}
                 />
             </View>
         );
