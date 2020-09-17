@@ -4,5 +4,7 @@ export const when = {
 
 
 export const get = {
-    cityItem: id => element(by.id(`${id}-key`))
+    cityItem: id => element(by.id(`cityItem-${id}`)),
+    weatherItem: id => element(by.id(`weatherItem-${id}`))
+
 };

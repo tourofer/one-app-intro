@@ -2,10 +2,9 @@ import { City, CityResponse, DayForcastInterface, ForcastItemInterface } from ".
 
 export const e2eConsts = {
     first_city_id : "1",
-    raw_weather_response : require("./call_stubs/london.response.json")
+    raw_weather_response : require("./call_stubs/weather_forcast_london.response.json")
 }
 
-export const itemInPosition = (pos : number) : ForcastItemInterface => e2eConsts.raw_weather_response[pos]
 
 const fetchCitiesResponse = [
     {

@@ -28,11 +28,12 @@ export default MainWeather = (props) => {
     countryKeyExtractor = (item) => `${item.id}-key`;
 
     renderItem = ({ item }) => {
-        
+        console.log(`cityItem-${item.id}`)
         const onCityItemPressed = () =>Navigator.navigateToCityWeather(props.componentId, item)
 
         return (
             <ListItem
+                testID={`cityItem-${item.id}`}
                 activeBackgroundColor={Colors.purple70}
                 activeOpacity={0.1}
                 height={77.5}

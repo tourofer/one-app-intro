@@ -68,7 +68,7 @@ describe('weatherActions', () => {
 
     describe('fetch city weather', () => {
         const stubResponses = {
-            real_london_response: require("../service/call_stubs/london.response.json"),
+            real_london_response: require("./call_stubs/weather_forcast_london.response.json"),
             unordered_items_response: [
                 {
                     id: 3,

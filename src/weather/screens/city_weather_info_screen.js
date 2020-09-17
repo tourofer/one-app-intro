@@ -35,7 +35,7 @@ renderItem = ({ item }) => {
 
 const WeatherListItem = ({ item }) => {
     return <ListItem
-        testID="weather-item-list"
+        testID={`weatherItem-${item.id}`}
         activeBackgroundColor={Colors.purple70}
         activeOpacity={0.1}
         height={77.5}>
