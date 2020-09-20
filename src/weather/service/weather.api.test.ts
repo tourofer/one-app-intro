@@ -80,17 +80,32 @@ describe('Weather Api', () => {
         })
 
         describe('fetch city by id', () => {
+            const fakeCity = {
+                woeid: 34,
+                title: "searched"
+            }
+
             const testConsts = {
-                request_query: "test query",
+                request_query: "sea",
+                response: [fakeCity],
                 expected_city_info_url: "/search/?query=test-city",
             }
 
             it('will call the correct url', async () => {
-                await uut.fetchCityId("test-city")
+                mockServerResponse = testConsts.response
+                await uut.queryCityByName("test-city")
 
                 const expectedUrl = uut.base_weather_api_url + testConsts.expected_city_info_url
                 expect(global.fetch).toBeCalledTimes(1)
                 expect(global.fetch).toBeCalledWith(expectedUrl)
+            })
+
+            it('will call add id and name properties to responese cities', async () => {
+                mockServerResponse = testConsts.response
+                const queriedCitiesRespnonse = await uut.queryCityByName("test-city")
+                const respnse = queriedCitiesRespnonse.data[0]
+                expect(respnse.id).toEqual(fakeCity.woeid)
+                expect(respnse.name).toEqual(fakeCity.title)
             })
         })
     })

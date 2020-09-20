@@ -6,16 +6,16 @@ import { weatherStore } from '../store/weather.store';
 import { Navigator } from '../weather.navigation'
 import { View, Text, ListItem, Colors } from 'react-native-ui-lib'
 import * as WeatherActions from '../service/weather.actions'
+
 export default MainWeather = (props) => {
 
-
+    const useCountryListConnect = () => useConnect(() => ({
+        cities: weatherStore.getCities()
+    }));
+    
     useEffect(() => {
         WeatherActions.fetchCitiesList()
     }, [])
-
-    //TODO this is not working and has issues when returning to wheather info
-
-    // from : https://github.com/underscopeio/react-native-navigation-hooks/blob/ae938aec76bc9dbbd340c4120cd548488e1bcf12/example/src/screens/RootScreen.tsx
 
     const handleNavigationButtonPress = useCallback(() => {
         Navigator.show_add_city_modal()
@@ -49,11 +49,10 @@ export default MainWeather = (props) => {
             <View>
                 <Text dark10 text80 style={{ marginLeft: 8, marginTop: 8 }}>Choose city:</Text>
                 <FlatList
-                    key="city-list-key"
                     testID="cities-list"
                     data={cities}
-                    keyExtractor={this.countryKeyExtractor}
-                    renderItem={this.renderItem}
+                    keyExtractor={countryKeyExtractor}
+                    renderItem={renderItem}
                 />
             </View>
         );
@@ -71,7 +70,5 @@ export default MainWeather = (props) => {
         },
     };
 
-    const useCountryListConnect = (props) => useConnect(() => ({
-        cities: weatherStore.getCities()
-    }));
+
 

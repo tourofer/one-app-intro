@@ -1,11 +1,18 @@
 import "../weather.interface"
 import { ForcastItemInterface, City } from "../weather.interface";
 import moment from 'moment';
+import NetInfo from "@react-native-community/netinfo";
 
 export const base_weather_api_url = "https://www.metaweather.com/api/location"
 export const base_app_server_url = "http://localhost:3000"
 export const city_list_url = base_app_server_url + "/cities"
 
+
+export interface Response<T> {
+    data?: T,
+    error?: any, 
+    hasConnection: boolean
+}
 
 export async function fetchCitiesList(): Promise<Array<City>> {
     const response = await fetch(city_list_url);
@@ -24,11 +31,13 @@ export async function addCity(city: City): Promise<any> {
     });
     return response.json()
 }
-export async function fetchCityId(query: string): Promise<Array<City>> {
-    const response = await fetch(`${base_weather_api_url}/search/?query=${query}`);
-    const responseJson = await response.json()
-    return responseJson.map((item: any) => ({ id: item.woeid, name: item.title }))
+export async function queryCityByName(query: string): Promise<Response<Array<City>>> {
 
+    return wrapInResponse(async () => {
+        const response = await fetch(`${base_weather_api_url}/search/?query=${query}`);
+        const responseJson = await response.json()
+        return responseJson.map((item: any) => ({ id: item.woeid, name: item.title }))
+    })
 }
 
 export async function fetchWeather(
@@ -38,6 +47,22 @@ export async function fetchWeather(
     const requestDateFormat = moment(date).utc().format('yyyy/MM/DD')
     const response = await fetch(`${base_weather_api_url}/${city_id}/${requestDateFormat}/`);
     return await response.json()
+}
+
+const wrapInResponse = async (call)  => {
+    try {
+        const response = await call();
+        return {
+            hasConnection: true, 
+            data: response
+        }
+    } catch (e) {
+        console.log(`api error: ${JSON.stringify(e)}`)
+        return {
+            hasConnection: (await NetInfo.fetch()).isConnected, 
+            error: e
+        }
+    }
 }
 
 

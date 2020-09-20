@@ -3,50 +3,51 @@ import { FlatList, StyleSheet, ActivityIndicator } from 'react-native'
 import { debounce } from 'lodash'
 import * as AddCityActions from '../service/weather.actions'
 import { View, Text, TextField, ListItem, Colors } from 'react-native-ui-lib'
+import * as AddCityPresenter from "./add_city_screen_presenter"
+
 
 export default AddCityScreen = (props) => {
-
     let lastQuery
-
     const [cityResponse, setCityResponse] = useState(null)
+
+    const [showNoResults, setShowNoResults] = useState(false)
+
     const onChangeText = (async (text) => {
         if (text === "") {
-            return
+            setCityResponse([])
+            return 
         }
         lastQuery = text
         try {
             const cityResponse = await AddCityActions.queryCity(text)
             if (cityResponse.query === lastQuery) {
-                setCityResponse(cityResponse.cities)
+                AddCityPresenter.handleQueryResponse(cityResponse, setCityResponse, setShowNoResults)
             }
         } catch (e) {
             console.log(e)
         }
     })
 
-
-
     renderListItem = ({ item }) => {
         const onCityItemPressed = () => AddCityActions.addCity(props.componentId, item)
+
         return <ListItem
             bg-red70
+            
             testID={`weatherItem-${item.id}`}
             activeBackgroundColor={Colors.purple70}
             activeOpacity={0.1}
             height={77.5}>
 
-            <ListItem.Part containerStyle={[{ flex: 1 }]}>
-                <Text flex text70
+            <ListItem.Part containerStyle={[{ flex: 1}]}>
+                <Text flex text70 center
                     testID={`addCityItem-${item.id}`}
                     onPress={onCityItemPressed}>{item.name}</Text>
             </ListItem.Part>
         </ListItem>
-
-
     }
 
     return <View flex>
-
         <TextField
             testID="citySearchBox"
             text70
@@ -57,18 +58,19 @@ export default AddCityScreen = (props) => {
             onChangeText={debounce(onChangeText, 300)}
             floatOnFocus />
 
+        {
+            showNoResults ?
+                <Text flex center>No results</Text> :
 
-        {cityResponse ?
-            <View>
-                <FlatList
-                    data={cityResponse}
-                    keyExtractor={citiesKeyExtractor}
-                    renderItem={renderListItem} />
-            </View>
-            :
-            <View />
+                cityResponse ?
+                    <View>
+                        <FlatList
+                            data={cityResponse}
+                            keyExtractor={citiesKeyExtractor}
+                            renderItem={renderListItem} />
+                    </View>
+                    : <View />
         }
-
     </View>
 }
 

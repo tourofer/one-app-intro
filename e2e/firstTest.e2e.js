@@ -1,6 +1,6 @@
 
 import * as driver from "./weather.driver"
-import {e2eConsts} from '../src/weather/service/weather.api.e2e'
+import { e2eConsts } from '../src/weather/service/weather.api.e2e'
 describe('Weather critical flows', () => {
 
   beforeEach(async () => {
@@ -25,8 +25,8 @@ describe('Weather critical flows', () => {
     await driver.when.tapOnFetchedCityWithId("3")
     await driver.when.tapOnFetchedCityWithId("3")
 
-     const expectedFetchedCity =  e2eConsts.fetched_city_1
-     await expect(element(by.text("Choose city:"))).toBeVisible();
+    const expectedFetchedCity = e2eConsts.fetched_city_1
+    await expect(element(by.text("Choose city:"))).toBeVisible();
 
     await expect(element(by.text(expectedFetchedCity.name))).toBeVisible();
 

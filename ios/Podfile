@@ -12,6 +12,8 @@ target 'ofer_intro' do
 
   pod 'ReactNativeUiLib', :path => '../node_modules/react-native-ui-lib/lib'
 
+  pod 'react-native-netinfo', :path => '../node_modules/@react-native-community/netinfo'
+
   target 'ofer_introTests' do
     inherit! :complete
     # Pods for testing

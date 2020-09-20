@@ -1,16 +1,6 @@
 import { DayForcastInterface, ForcastItemInterface } from "../weather.interface";
 import * as uut from './weather.actions'
-import { WeatherStateNames } from "./weather.api"
-
-
-
-
-// const test_args = {
-//     first_city_qeury: "first cit",
-//     second_city_qeury: "second cit",
-// }
-
-
+import { WeatherStateNames } from "./weather.parser"
 
 describe('weatherActions', () => {
 
@@ -19,6 +9,7 @@ describe('weatherActions', () => {
 
 
     beforeAll(() => {
+
         originalFetch = global.fetch
         //@ts-ignore
         global.fetch = jest.fn(() =>
@@ -39,6 +30,7 @@ describe('weatherActions', () => {
     function setupFetchCityResponse(mock: any) {
         mockServerResponse = mock
     }
+
     describe('query city', () => {
 
         const testParms = {
@@ -48,10 +40,9 @@ describe('weatherActions', () => {
                     woeid: "first_city_id",
                     title: "first city"
                 }],
-            expected: {
-                query: "first_c",
-                cities: [{ "id": "first_city_id", "name": "first city" }]
-            }
+            expected_cities: [{ "id": "first_city_id", "name": "first city" }],
+            expected_query: "first_c"
+            
         }
 
         it('fetch city list from api', async () => {
@@ -59,12 +50,27 @@ describe('weatherActions', () => {
 
             const response = await uut.queryCity(testParms.query)
 
-            expect(response).toEqual(testParms.expected)
+            expect(response.query).toEqual(testParms.expected_query)
+            expect(response.data).toEqual(testParms.expected_cities)
+            expect(response.hasConnnection).toEqual(true)
+        })
 
+        it('will return no connection error', async () => {
+            //TODO finsih this test
+            const mockResponse = {
+                hasConnection: false, 
+            }
+       
+            jest.mock('./weather.api', () => ({
+                queryCityByName: jest.fn().mockResolvedValue(mockResponse),
+            }));
+      
+            const response = await uut.queryCity(testParms.query)
+
+            expect(response.data).toEqual(undefined)
+            expect(response.hasConnnection).toEqual(false)
         })
     })
-
-
 
     describe('fetch city weather', () => {
         const stubResponses = {
@@ -381,7 +387,8 @@ describe('weatherActions', () => {
                 expect(asset).toEqual(expectedIconPaths.clear)
             })
         })
-
     })
+
+
 })
 
