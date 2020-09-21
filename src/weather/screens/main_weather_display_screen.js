@@ -12,7 +12,7 @@ export default MainWeather = (props) => {
     const useCountryListConnect = () => useConnect(() => ({
         cities: weatherStore.getCities()
     }));
-    
+
     useEffect(() => {
         WeatherActions.fetchCitiesList()
     }, [])
@@ -28,8 +28,7 @@ export default MainWeather = (props) => {
     countryKeyExtractor = (item) => `${item.id}-key`;
 
     renderItem = ({ item }) => {
-        console.log(`cityItem-${item.id}`)
-        const onCityItemPressed = () =>Navigator.navigateToCityWeather(props.componentId, item)
+        const onCityItemPressed = () => Navigator.navigateToCityWeather(props.componentId, item)
 
         return (
             <ListItem
@@ -45,30 +44,26 @@ export default MainWeather = (props) => {
         );
     }
 
-        return (
-            <View>
-                <Text dark10 text80 style={{ marginLeft: 8, marginTop: 8 }}>Choose city:</Text>
-                <FlatList
-                    testID="cities-list"
-                    data={cities}
-                    keyExtractor={countryKeyExtractor}
-                    renderItem={renderItem}
-                />
-            </View>
-        );
-    }
-
-    MainWeather.options = {
-        topBar: {
-            rightButtons: [
-                {
-                    id: 'addCity',
-                    testID: 'add-city-btn',
-                    text: '+',
-                },
-            ],
-        },
-    };
-
-
-
+    return (
+        <View>
+            <Text dark10 text80 style={{ marginLeft: 8, marginTop: 8 }}>Choose city:</Text>
+            <FlatList
+                testID="cities-list"
+                data={cities}
+                keyExtractor={countryKeyExtractor}
+                renderItem={renderItem}
+            />
+        </View>
+    );
+}
+MainWeather.options = {
+    topBar: {
+        rightButtons: [
+            {
+                id: 'addCity',
+                testID: 'add-city-btn',
+                text: '+',
+            },
+        ],
+    },
+};

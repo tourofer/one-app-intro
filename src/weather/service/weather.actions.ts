@@ -4,7 +4,18 @@ import * as WeatherApi from "./weather.api"
 import { Navigation } from "react-native-navigation"
 import * as Parser from "./weather.parser"
 import moment from "moment";
-import NetInfo from "@react-native-community/netinfo";
+
+
+export async function queryCity(query: string): Promise<QueryCityResponse> {
+    const response = await WeatherApi.queryCityByName(query)
+
+    return {
+        query: query,
+        error: response.error,
+        hasConnnection: response.hasConnection,
+        data: response.data,
+    }
+}
 
 export interface QueryCityResponse {
     query: string,
@@ -20,23 +31,13 @@ export async function fetchCitiesList() {
         console.log(e)
     }
 }
-export async function queryCity(query: string): Promise<QueryCityResponse> {
-    const response = await WeatherApi.queryCityByName(query)
 
-    return {
-        query: query,
-        error: response.error,
-        hasConnnection: response.hasConnection,
-        data:response.data,
-    }
-}
 
 export async function addCity(componentId: string, city: City) {
     try {
         const serverCity: City = await WeatherApi.addCity(city)
         weatherStore.addCity(serverCity)
         Navigation.dismissModal(componentId);
-
     } catch (e) {
         alert("Please make sure fake server is started")
         console.log(e)

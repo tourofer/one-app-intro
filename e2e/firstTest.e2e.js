@@ -7,13 +7,13 @@ describe('Weather critical flows', () => {
     await device.reloadReactNative();
   });
 
-  it('should display city weather and go back to city list', async () => {
+  it.only('should display city weather and go back to city list', async () => {
     await driver.when.pressOnCity(e2eConsts.first_city_id)
 
     const firstItem = e2eConsts.raw_weather_response[1]
     await expect(driver.get.weatherItem(firstItem.id)).toBeVisible();
 
-    await element(by.type('_UIBackButtonContainerView')).tap();
+    await element(by.id('pop')).tap();
 
     await expect(element(by.text("cities-list"))).toBeVisible();
   });

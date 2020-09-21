@@ -1,8 +1,8 @@
 import {QueryCityResponse } from "../service/weather.actions"
 
-export const handleQueryResponse =(response: QueryCityResponse, setCity: any, showEmptyResults: any) => {
+export const handleQueryResponse =(response: QueryCityResponse, setCities: any, showEmptyResults: any) => {
     if (response.data) {
-        setCity(response.data)
+        setCities(response.data)
         showEmptyResults(response.data.length == 0)
     }
 

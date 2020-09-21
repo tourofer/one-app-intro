@@ -44,7 +44,7 @@ export const parseWeatherItems = (items: Array<ForcastItemInterface>,  date: Dat
             })
         return parsedItems
     } catch(e) {
-        console.log(`error parsing weather items: ${e}`)
+        console.log(e)
     }
 }
 

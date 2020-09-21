@@ -32,7 +32,6 @@ export async function addCity(city: City): Promise<any> {
     return response.json()
 }
 export async function queryCityByName(query: string): Promise<Response<Array<City>>> {
-
     return wrapInResponse(async () => {
         const response = await fetch(`${base_weather_api_url}/search/?query=${query}`);
         const responseJson = await response.json()
@@ -57,10 +56,10 @@ const wrapInResponse = async (call)  => {
             data: response
         }
     } catch (e) {
-        console.log(`api error: ${JSON.stringify(e)}`)
+        console.log(e)
         return {
             hasConnection: (await NetInfo.fetch()).isConnected, 
-            error: e
+            error: {...e}
         }
     }
 }

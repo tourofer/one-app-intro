@@ -1,48 +1,34 @@
-import React, { useState } from 'react'
-import { FlatList, StyleSheet, ActivityIndicator } from 'react-native'
-import { debounce } from 'lodash'
-import * as AddCityActions from '../service/weather.actions'
+import React from 'react'
+import { FlatList, StyleSheet } from 'react-native'
 import { View, Text, TextField, ListItem, Colors } from 'react-native-ui-lib'
-import * as AddCityPresenter from "./add_city_screen_presenter"
+import {AddCityHook} from './add_city_hook'
+
 
 
 export default AddCityScreen = (props) => {
-    let lastQuery
-    const [cityResponse, setCityResponse] = useState(null)
 
-    const [showNoResults, setShowNoResults] = useState(false)
+    const {
+        getOnCityItemPressed,
+        onChangeText,
+        showNoResults,
+        cities } = AddCityHook(props)
 
-    const onChangeText = (async (text) => {
-        if (text === "") {
-            setCityResponse([])
-            return 
-        }
-        lastQuery = text
-        try {
-            const cityResponse = await AddCityActions.queryCity(text)
-            if (cityResponse.query === lastQuery) {
-                AddCityPresenter.handleQueryResponse(cityResponse, setCityResponse, setShowNoResults)
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    })
+    //  react hook testing library
+    citiesKeyExtractor = (city) => `${city.id}-key`;
 
     renderListItem = ({ item }) => {
-        const onCityItemPressed = () => AddCityActions.addCity(props.componentId, item)
-
         return <ListItem
             bg-red70
-            
+
             testID={`weatherItem-${item.id}`}
             activeBackgroundColor={Colors.purple70}
             activeOpacity={0.1}
             height={77.5}>
 
-            <ListItem.Part containerStyle={[{ flex: 1}]}>
+            <ListItem.Part containerStyle={[{ flex: 1 }]}>
                 <Text flex text70 center
                     testID={`addCityItem-${item.id}`}
-                    onPress={onCityItemPressed}>{item.name}</Text>
+                    onPress={getOnCityItemPressed(item)}>{item.name}</Text>
             </ListItem.Part>
         </ListItem>
     }
@@ -55,17 +41,17 @@ export default AddCityScreen = (props) => {
             floatingPlaceholder
             autoFocus={true}
             placeholder="Enter city name"
-            onChangeText={debounce(onChangeText, 300)}
+            onChangeText={onChangeText}
             floatOnFocus />
 
         {
             showNoResults ?
                 <Text flex center>No results</Text> :
 
-                cityResponse ?
+                cities ?
                     <View>
                         <FlatList
-                            data={cityResponse}
+                            data={cities}
                             keyExtractor={citiesKeyExtractor}
                             renderItem={renderListItem} />
                     </View>
@@ -74,7 +60,6 @@ export default AddCityScreen = (props) => {
     </View>
 }
 
-citiesKeyExtractor = (city) => `${city.id}-key`;
 
 
 AddCityScreen.options = {
