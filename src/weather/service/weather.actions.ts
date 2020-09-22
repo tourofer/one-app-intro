@@ -7,6 +7,7 @@ import moment from "moment";
 
 
 export async function queryCity(query: string): Promise<QueryCityResponse> {
+    console.log("query city called")
     const response = await WeatherApi.queryCityByName(query)
 
     return {

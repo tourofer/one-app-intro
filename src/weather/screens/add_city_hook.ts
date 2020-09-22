@@ -1,32 +1,51 @@
-import React, { useCallback, useState } from 'react'
-import * as AddCityActions from '../service/weather.actions'
-import * as AddCityPresenter from "./add_city_screen_presenter"
-
+import { useCallback, useEffect, useState } from 'react'
+import * as weatherActions from '../service/weather.actions'
+import * as addCityPresenter from "./add_city_screen_presenter"
+import debounce from 'lodash.debounce'
 
 export const AddCityHook = (props) => {
-    let query
     const [cities, setCities] = useState(null)
-    //const [query, setQuery] = useState("")
+    const [query, setQuery] = useState("")
     const [showNoResults, setShowNoResults] = useState(false)
 
+
+    //TODO review with Noam
+    useEffect( () => {
+        let canceled = false
+        if (query === "") {
+            setCities([])
+            setShowNoResults(false)
+            return
+        }
+
+        const fetchCities = async () => {
+            try {
+                const cityResponse = await weatherActions.queryCity(query)
+                console.log(`city response: ${JSON.stringify(cityResponse)}`)
+                if (!canceled) {
+                    addCityPresenter.handleQueryResponse(cityResponse, setCities, setShowNoResults)
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+
+        fetchCities()
+        return () => (canceled = true);
+
+    }, [query, props.componentId])
+
+    //TODO fix tests
     const onChangeText = (async (text) => {        
         if (text === "") {
             setCities([])
             return
         }
-        query = (text)
-        try {
-            const cityResponse = await AddCityActions.queryCity(text)
-
-            if (cityResponse.query === query) {
-                AddCityPresenter.handleQueryResponse(cityResponse, setCities, setShowNoResults)
-            }
-        } catch (e) {
-            console.log(e)
-        }
+        setQuery(text)
     })
 
-    const getOnCityItemPressed = useCallback((item) => () => AddCityActions.addCity(props.componentId, item), [props.componentId])
+    const getOnCityItemPressed = useCallback((item) => () => weatherActions.addCity(props.componentId, item), [props.componentId])
 
     return {
         getOnCityItemPressed,
