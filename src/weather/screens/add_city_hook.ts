@@ -10,7 +10,7 @@ export const AddCityHook = (props) => {
 
 
     //TODO review with Noam
-    useEffect( () => {
+    useEffect(() => {
         let canceled = false
         if (query === "") {
             setCities([])
@@ -21,7 +21,6 @@ export const AddCityHook = (props) => {
         const fetchCities = async () => {
             try {
                 const cityResponse = await weatherActions.queryCity(query)
-                console.log(`city response: ${JSON.stringify(cityResponse)}`)
                 if (!canceled) {
                     addCityPresenter.handleQueryResponse(cityResponse, setCities, setShowNoResults)
                 }
@@ -32,12 +31,12 @@ export const AddCityHook = (props) => {
 
 
         fetchCities()
-        return () => (canceled = true);
+        return () => (canceled = false);
 
     }, [query, props.componentId])
 
     //TODO fix tests
-    const onChangeText = (async (text) => {        
+    const onChangeText = (async (text) => {
         if (text === "") {
             setCities([])
             return
