@@ -19,19 +19,15 @@ export const AddCityHook = (props) => {
         }
 
         const fetchCities = async () => {
-            try {
-                const cityResponse = await weatherActions.queryCity(query)
-                if (!canceled) {
-                    addCityPresenter.handleQueryResponse(cityResponse, setCities, setShowNoResults)
-                }
-            } catch (e) {
-                console.log(e)
+            const cityResponse = await weatherActions.queryCity(query)
+            if (!canceled) {
+                addCityPresenter.handleQueryResponse(cityResponse, setCities, setShowNoResults)
             }
         }
 
 
         fetchCities()
-        return () => (canceled = false);
+       // return () => (canceled = true);
 
     }, [query, props.componentId])
 

@@ -79,7 +79,7 @@ describe('Weather Api', () => {
             expect(global.fetch).toBeCalledWith(testConsts.expected_called_url)
         })
 
-        describe('fetch city by id', () => {
+        describe('query cities', () => {
             const fakeCity = {
                 woeid: 34,
                 title: "searched"
@@ -102,11 +102,45 @@ describe('Weather Api', () => {
 
             it('will call add id and name properties to responese cities', async () => {
                 mockServerResponse = testConsts.response
+
                 const queriedCitiesRespnonse = await uut.queryCityByName("test-city")
                 const respnse = queriedCitiesRespnonse.data[0]
+
                 expect(respnse.id).toEqual(fakeCity.woeid)
                 expect(respnse.name).toEqual(fakeCity.title)
             })
+
+            it('will catch errors and return it in response', async () => {
+                global.fetch = jest.fn(() => {throw TypeError('error')})
+
+                const respnse = await uut.queryCityByName("test-city")
+
+                expect(respnse.error).toBeDefined()
+            })
+        })
+
+        describe('addCity', () => {
+            //TODO
+            const fakeCity = {
+                id: "34",
+                name: "added"
+            }
+
+            const testConsts = {
+                response: fakeCity,
+                expected_city_info_url: '/cities',
+            }
+
+
+            it('will call the correct url', async () => {
+                mockServerResponse = testConsts.response
+                await uut.addCity(fakeCity)
+
+                const expectedUrl = uut.base_app_server_url + testConsts.expected_city_info_url 
+                expect(global.fetch).toBeCalledTimes(1)
+                expect(global.fetch).toBeCalledWith(expect.stringContaining(expectedUrl))
+            })
+
         })
     })
 })

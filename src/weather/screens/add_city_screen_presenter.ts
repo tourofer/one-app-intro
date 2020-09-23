@@ -2,7 +2,6 @@ import {QueryCityResponse } from "../service/weather.actions"
 import { Alert } from 'react-native';
 
 export const handleQueryResponse = (response: QueryCityResponse, setCities: any, showEmptyResults: any) => {
-    console.log('add city presenter', response)
     if (response.data) {
         setCities(response.data)
         showEmptyResults(response.data.length == 0)

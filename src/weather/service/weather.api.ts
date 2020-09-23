@@ -56,10 +56,9 @@ const wrapInResponse = async (call)  => {
             data: response
         }
     } catch (e) {
-        console.log(e)
         return {
             hasConnection: (await NetInfo.fetch()).isConnected, 
-            error: {...e}
+            error: e
         }
     }
 }

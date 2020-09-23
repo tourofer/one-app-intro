@@ -1,14 +1,13 @@
 import { City, DayForcastInterface } from "../weather.interface";
 import { weatherStore } from "../store/weather.store"
-import * as WeatherApi from "./weather.api"
+import * as weatherApi from "./weather.api"
 import { Navigation } from "react-native-navigation"
-import * as Parser from "./weather.parser"
+import * as parser from "./weather.parser"
 import moment from "moment";
 
 
 export async function queryCity(query: string): Promise<QueryCityResponse> {
-    const response = await WeatherApi.queryCityByName(query)
-
+    const response = await weatherApi.queryCityByName(query)
     return {
         query: query,
         error: response.error,
@@ -25,7 +24,7 @@ export interface QueryCityResponse {
 }
 export async function fetchCitiesList() {
     try {
-        const cities: Array<City> = await WeatherApi.fetchCitiesList()
+        const cities: Array<City> = await weatherApi.fetchCitiesList()
         weatherStore.setCityList(cities)
     } catch (e) {
         console.log(e)
@@ -35,7 +34,7 @@ export async function fetchCitiesList() {
 
 export async function addCity(componentId: string, city: City) {
     try {
-        const serverCity: City = await WeatherApi.addCity(city)
+        const serverCity: City = await weatherApi.addCity(city)
         weatherStore.addCity(serverCity)
         Navigation.dismissModal(componentId);
     } catch (e) {
@@ -50,8 +49,8 @@ export async function fetchWeather(
     date: Date,
     itemsNum: number = 12,
 ): Promise<DayForcastInterface> {
-    const rawResponse = await WeatherApi.fetchWeather(city_id, date)
-    const parsedItems = Parser.parseWeatherItems(rawResponse, date, itemsNum)
+    const rawResponse = await weatherApi.fetchWeather(city_id, date)
+    const parsedItems = parser.parseWeatherItems(rawResponse, date, itemsNum)
 
     return {
         city_name: city_name,

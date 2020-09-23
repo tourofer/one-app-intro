@@ -7,7 +7,7 @@ describe('Weather critical flows', () => {
     await device.reloadReactNative();
   });
 
-  it.only('should display city weather and go back to city list', async () => {
+  it('should display city weather and go back to city list', async () => {
     await driver.when.pressOnCity(e2eConsts.first_city_id)
 
     const firstItem = e2eConsts.raw_weather_response[1]

@@ -40,10 +40,21 @@ describe('add_city_hook', () => {
 
     })
 
-    test.only('will not return resopnses for previous query', async () => {
+    test('will not call api on empty query', () => {
+        const { result } = renderHook(() => AddCityHook({ componentId: "test-id" }))
+
+        act(() => {
+            result.current.onChangeText("")
+        })
+       
+        expect(result.current.cities).toEqual([])
+        expect(result.current.showNoResults).toEqual(false)
+    })
+
+    test('will not return resopnses for previous query', async () => {
         const fakePromises = {
-            first: new Promise(resolve =>  resolve({ data: ['a'] })),
-            second: new Promise(resolve => resolve({ data: ['b'] })),
+            first: new Promise(resolve =>  setTimeout(resolve({ data: ['a'] }), 300)),
+            second: new Promise(resolve => setTimeout(resolve({ data: ['b'] }),  100)),
         }
 
         const queries = {
@@ -77,63 +88,6 @@ describe('add_city_hook', () => {
 
         expect(weatherActions.addCity).toHaveBeenCalledWith("test-id", { id: '1' });
     })
-
-    // test.only('will not return resopnses for previous query', async () => {
-
-
-
-
-
-    //     weatherActions.queryCity.mockResolvedValue(generateQueryResponse)
-
-
-    //     const { result } = renderHook(() => AddCityHook({ componentId: "test-id" }))
-
-
-
-    //     await act(async () => {
-    //         await result.current.onChangeText('a')();
-    //         await result.current.onChangeText('b')();
-    //     })
-
-    //     fakePromises.second.resolve()
-    //      fakePromises.first.resolve()
-
-    // })
 })
-
-
-
-    // test('should show no results when getting empty resopnse', async () => {
-    //     mockServerResponse = []
-    //     const { result } = renderHook(() => AddCityHook({ componentId: "test-id" }))
-
-    //     await act(async () => {
-    //         await result.current.onChangeText("f,xfsjdhf")
-    //     })
-
-    //     expect(result.current.showNoResults).toEqual(true)
-    //     expect(result.current.cities).toEqual([])
-
-    // })
-
-    // test('clicking on city item will add it to the store', async () => {
-    //     const fakeCity = {
-    //         id: '324',
-    //         name: 'new_city'
-    //     }
-
-    //     mockServerResponse = fakeCity
-
-    //     const { result } = renderHook(() => AddCityHook({ componentId: "test-id" }))
-
-    //     await act(async () => {
-    //         await result.current.getOnCityItemPressed({ id: '1' })()
-    //     })
-
-    //     expect(mockStore.addCity).toHaveBeenCalledWith(fakeCity);
-    //     expect(Navigation.dismissModal).toHaveBeenCalledWith("test-id");
-    // })
-
 
 

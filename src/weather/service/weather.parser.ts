@@ -28,8 +28,7 @@ const Images = {
 }
 
 
-export const parseWeatherItems = (items: Array<ForcastItemInterface>,  date: Date, itemsNum: number):  Array<ForcastItemInterface> => {
-    try {
+export const parseWeatherItems = (items: Array<ForcastItemInterface>,  date: Date, itemsNum: number = 12):  Array<ForcastItemInterface> => {
         const filteredItems = filterForcastCreatedAfterRequestedDate(items, date)
         const parsedItems = sortByDate(filteredItems)
             .slice(0, itemsNum)
@@ -43,9 +42,6 @@ export const parseWeatherItems = (items: Array<ForcastItemInterface>,  date: Dat
                 }
             })
         return parsedItems
-    } catch(e) {
-        console.log(e)
-    }
 }
 
 
@@ -82,7 +78,6 @@ const filterForcastCreatedAfterRequestedDate = (items: Array<ForcastItemInterfac
             return createdDateInUtc <= maxAllowedDateInUtc
         })
     }
-
     return []
 }
 
