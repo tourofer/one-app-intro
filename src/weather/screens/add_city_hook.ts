@@ -27,7 +27,7 @@ export const AddCityHook = (props) => {
 
 
         fetchCities()
-       // return () => (canceled = true);
+        return () => (canceled = true);
 
     }, [query, props.componentId])
 

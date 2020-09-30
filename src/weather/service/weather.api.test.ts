@@ -8,17 +8,17 @@ describe('Weather Api', () => {
 
     beforeAll(() => {
         originalFetch = global.fetch
+    })
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        moment.tz.setDefault("Asia/Jerusalem")
         //@ts-ignore
         global.fetch = jest.fn(() =>
             Promise.resolve({
                 json: () => Promise.resolve(mockServerResponse),
             })
         );
-    })
-
-    beforeEach(() => {
-        jest.clearAllMocks();
-        moment.tz.setDefault("Asia/Jerusalem")
     })
 
     afterAll(() => {
@@ -134,11 +134,15 @@ describe('Weather Api', () => {
 
             it('will call the correct url', async () => {
                 mockServerResponse = testConsts.response
-                await uut.addCity(fakeCity)
+                const response = await uut.addCity(fakeCity)
 
                 const expectedUrl = uut.base_app_server_url + testConsts.expected_city_info_url 
+                const expectedBody = JSON.stringify(fakeCity)
+
                 expect(global.fetch).toBeCalledTimes(1)
-                expect(global.fetch).toBeCalledWith(expect.stringContaining(expectedUrl))
+                expect(global.fetch.mock.calls[0][0]).toEqual(expectedUrl)
+                expect(global.fetch.mock.calls[0][1]).toMatchObject({body: expectedBody})
+                expect(response).toEqual(fakeCity)
             })
 
         })

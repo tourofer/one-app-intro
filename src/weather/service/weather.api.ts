@@ -20,7 +20,7 @@ export async function fetchCitiesList(): Promise<Array<City>> {
     return responseJson
 }
 
-export async function addCity(city: City): Promise<any> {
+export async function addCity(city: City): Promise<City> {
     const response = await fetch(city_list_url, {
         method: 'POST',
         headers: {
@@ -31,6 +31,7 @@ export async function addCity(city: City): Promise<any> {
     });
     return response.json()
 }
+
 export async function queryCityByName(query: string): Promise<Response<Array<City>>> {
     return wrapInResponse(async () => {
         const response = await fetch(`${base_weather_api_url}/search/?query=${query}`);
