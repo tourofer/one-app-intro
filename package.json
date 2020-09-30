@@ -9,20 +9,17 @@
     "test": "jest",
     "lint": "eslint .",
     "start-e2e": "RN_SRC_EXT=e2e.ts,e2e.js react-native start",
-    "start": "one-app-engine -ia —force-localhost",
-    "start-ios": "one-app-engine -i —force-localhost",
-    "start-android": "one-app-engine -a —force-localhost",
+    "start": "one-app-engine --mock-mode quickLogin -ia —force-localhost",
+    "start-ios": "one-app-engine --mock-mode quickLogin -i —force-localhost",
+    "start-android": "one-app-engine --mock-mode quickLogin -a —force-localhost",
     "postinstall": "one-app-engine —setup"
   },
-
   "main": "./src/module.js",
-
   "oneAppEngine": {
     "modules": [
       "ofer_intro"
     ]
   },
-
   "dependencies": {
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/datetimepicker": "^3.0.2",
@@ -56,7 +53,8 @@
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
     "wix-one-app-engine": "ga",
-    "wix-one-app-platform": "ga"
+    "wix-one-app-platform": "ga",
+    "wix-react-native-ui-lib": "ga"
   },
   "peerDependencies": {
     "wix-one-app-engine": "*"

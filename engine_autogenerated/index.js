@@ -1,0 +1,1 @@
+require('../node_modules/wix-one-app-engine/index')
