@@ -6,10 +6,12 @@
     "fake-server": "json-server --watch db.json",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "start-e2e": "RN_SRC_EXT=e2e.ts,e2e.js react-native start"
+    "start-e2e": "RN_SRC_EXT=e2e.ts,e2e.js react-native start",
+    "start": "one-app-engine -ia —force-localhost",
+    "start-ios": "one-app-engine -i —force-localhost",
+    "start-android": "one-app-engine -a —force-localhost"
   },
   "dependencies": {
     "@react-native-community/blur": "^3.6.0",
@@ -42,7 +44,12 @@
     "jest": "^25.5.4",
     "jest-circus": "^26.4.2",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "wix-one-app-engine": "ga",
+    "wix-one-app-platform": "ga"
+  },
+  "peerDependencies": {
+    "wix-one-app-engine": "*"
   },
   "jest": {
     "preset": "react-native"
