@@ -11,8 +11,18 @@
     "start-e2e": "RN_SRC_EXT=e2e.ts,e2e.js react-native start",
     "start": "one-app-engine -ia —force-localhost",
     "start-ios": "one-app-engine -i —force-localhost",
-    "start-android": "one-app-engine -a —force-localhost"
+    "start-android": "one-app-engine -a —force-localhost",
+    "postinstall": "one-app-engine —setup"
   },
+
+  "main": "./src/module.js",
+
+  "oneAppEngine": {
+    "modules": [
+      "ofer_intro"
+    ]
+  },
+
   "dependencies": {
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/datetimepicker": "^3.0.2",
