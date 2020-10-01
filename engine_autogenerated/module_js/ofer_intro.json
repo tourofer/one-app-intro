@@ -7,7 +7,7 @@
   "hasTabs": false,
   "hasDemoInit": false,
   "hasManagerApps": false,
-  "hasClientApps": false,
+  "hasClientApps": true,
   "hasInstallableApps": false,
   "hasQuickActions": false,
   "hasActivityScreens": false

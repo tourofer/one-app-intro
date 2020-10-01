@@ -1,5 +1,7 @@
 {
   "modules": [
-    "ofer_intro"
+    "wix-one-app-platform",
+    "ofer_intro",
+    "ofer_intro-demo"
   ]
 }

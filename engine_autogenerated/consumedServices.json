@@ -1,1 +1,8 @@
-{}
+{
+  "wix.platform.aboutTabWidgetsService": [
+    "wix-one-app-platform"
+  ],
+  "wix.platform.dashboardWidgetsService": [
+    "wix-one-app-platform"
+  ]
+}

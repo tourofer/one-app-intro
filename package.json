@@ -14,43 +14,20 @@
     "start-android": "one-app-engine --mock-mode quickLogin -a —force-localhost",
     "postinstall": "one-app-engine —setup"
   },
-  "main": "./src/module.js",
-  "oneAppEngine": {
-    "modules": [
-      "ofer_intro"
-    ]
-  },
+  "main": "src/module.js",
   "dependencies": {
-    "@react-native-community/blur": "^3.6.0",
-    "@react-native-community/datetimepicker": "^3.0.2",
-    "@react-native-community/netinfo": "^5.9.7",
-    "@react-native-community/picker": "^1.7.1",
-    "@types/jest": "^26.0.13",
-    "@types/react-native": "^0.63.15",
-    "lodash": "^4.17.20",
-    "lodash.debounce": "^4.0.8",
-    "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
-    "react": "16.13.1",
-    "react-native": "0.63.2",
-    "react-native-gesture-handler": "^1.8.0",
-    "react-native-navigation": "^6.12.2",
     "react-native-navigation-hooks": "^6.1.0",
-    "react-native-reanimated": "^1.13.0",
-    "react-native-ui-lib": "^5.14.0",
-    "remx": "^3.0.0-rc.21"
+    "lodash.debounce": "^4.0.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/runtime": "^7.8.4",
+    "@types/jest": "^26.0.13",
+    "@types/react-native": "^0.63.15",
     "@react-native-community/eslint-config": "^1.1.0",
     "@testing-library/react-hooks": "^3.4.1",
-    "babel-jest": "^25.1.0",
     "detox": "^17.4.5",
     "eslint": "^6.5.1",
     "jest": "^25.5.4",
     "jest-circus": "^26.4.2",
-    "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
     "wix-one-app-engine": "ga",
     "wix-one-app-platform": "ga",
@@ -61,5 +38,12 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "oneAppEngine": {
+    "modules": [
+      "wix-one-app-platform",
+      "ofer_intro",
+      "ofer_intro-demo"
+    ]
   }
 }

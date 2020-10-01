@@ -1,0 +1,189 @@
+{
+  "name": "wix-one-app-platform",
+  "prefix": "wix.platform",
+  "components": [
+    "wix.platform.BlockedScreenError",
+    "wix.platform.KillSwitchScreen",
+    "wix.platform.InAppModalScreen",
+    "wix.platform.editAboutTab",
+    "wix.platform.reorderAboutTabWidgetModal",
+    "wix.platform.mobileSettingsScreen",
+    "wix.platform.aboutTabWidgetSettingsScreen",
+    "wix.platform.aboutTabContactSettingComponent",
+    "wix.platform.aboutTabRichContentSettings",
+    "wix.platform.aboutTabRichContentEditModal",
+    "wix.platform.LoaderOverlay",
+    "wix.platform.LoaderScreen",
+    "wix.platform.aboutTabRichContentWidget",
+    "wix.platform.aboutTabAnnouncementsWidget",
+    "wix.platform.aboutTabMembersWidget",
+    "wix.platform.aboutTabContactUsWidget",
+    "wix.platform.aboutTabUpcomingWidget",
+    "wix.platform.home",
+    "wix.platform.home.header",
+    "wix.platform.home.edit.deletePlaceMessage",
+    "wix.platform.home.edit",
+    "wix.platform.home.addShortcut",
+    "wix.platform.home.addShortcutForBusiness",
+    "wix.platform.home.editShortcut",
+    "wix.platform.club",
+    "wix.platform.NMVDiscovery",
+    "wix.platform.editor",
+    "wix.platform.editor.editHeader",
+    "wix.platform.editor.editTabs",
+    "wix.platform.editor.RenameTab",
+    "wix.platform.editor.catalog",
+    "wix.platform.editor.settings",
+    "wix.platform.dashboard",
+    "wix.platform.dashboard.permissions",
+    "wix.platform.dashboard.businessSettings",
+    "wix.platform.dashboard.editQuickActions",
+    "wix.platform.dashboard.CreateWebsite",
+    "wix.platform.dashboard.EditWebsite",
+    "wix.platform.dashboard.WebsiteWebViewScreen",
+    "wix.platform.addApps",
+    "wix.platform.addItems",
+    "wix.platform.addApps.appAddedSplash",
+    "wix.platform.addApps.appDetails",
+    "wix.platform.editHeader",
+    "wix.platform.editHeader.logoMakerWebView",
+    "wix.platform.editHeader.renameTab",
+    "wix.platform.mobilePlaceStrength",
+    "wix.platform.impersonate",
+    "wix.platform.about",
+    "wix.platform.announcementsListScreen",
+    "wix.platform.announcementDetailsModal",
+    "wix.platform.renewPremium",
+    "wix.platform.generalInfoScreen",
+    "wix.platform.EditContactUsScreen",
+    "wix.platform.editUpdateMessage",
+    "wix.platform.updateMessage",
+    "wix.platform.hideYourMembersModal",
+    "wix.platform.updateVersionScreen",
+    "wix.platform.versionNoLongerSupportScreen",
+    "wix.platform.placeHeaderPreview",
+    "wix.platform.memberViewHeaderPreview",
+    "wix.platform.selectPlacesScreen",
+    "wix.platform.editOverviewScreen",
+    "wix.platform.dashboardUpcomingWidget",
+    "wix.platform.membersUpcomingWidget",
+    "wix.platform.meUpcomingWidget",
+    "wix.platform.topBarBadgedButton",
+    "wix.platform.dashboard.spaceBetweenWidgets",
+    "wix.platform.general.contact_section",
+    "wix.platform.general.contact_section.settings",
+    "wix.platform.general.announcement_section",
+    "wix.platform.general.announcement_section.settings",
+    "wix.platform.general.upcoming_section",
+    "wix.platform.general.upcoming_section.settings",
+    "wix.platform.general.members_section",
+    "wix.platform.general.content_section",
+    "wix.platform.general.content_section.settings",
+    "wix.platform.elements.divider_section",
+    "wix.platform.elements.divider_section.settings",
+    "wix.platform.elements.video_section",
+    "wix.platform.elements.video_section.settings",
+    "wix.platform.elements.image_section",
+    "wix.platform.elements.image_section.settings",
+    "wix.platform.elements.button_section",
+    "wix.platform.elements.button_section.settings",
+    "wix.platform.elements.title_section",
+    "wix.platform.elements.title_section.settings",
+    "wix.platform.webViewScreen",
+    "wix.platform.BucketCompletedScreen",
+    "wix.platform.dashboard.upgrade",
+    "wix.platform.DeeplinkErrorScreen",
+    "wix.platform.ManageRoles",
+    "wix.platform.InviteContributorScreen",
+    "wix.platform.ChangeRoleScreen"
+  ],
+  "methods": [
+    "wix.platform.general-settings.getProperty",
+    "wix.platform.generalInfo.getProperty",
+    "wix.platform.general-settings.getProperties",
+    "wix.platform.generalInfo.getProperties",
+    "wix.platform.generalInfo.setProperty",
+    "wix.platform.generalInfo.setProperties",
+    "wix.platform.clientApp.setEmptyState",
+    "wix.platform.clientApp.showFabHint",
+    "wix.platform.clientApp.removeFabHint",
+    "wix.platform.showToast",
+    "wix.platform.shouldShowNotificationsDisabledBanner",
+    "wix.platform.home.openPlace",
+    "wix.platform.home.markNewBusiness",
+    "wix.platform.isPremiumFeatureEligible",
+    "wix.platform.updatePartialBusinessDisplayOptions",
+    "wix.platform.updateBusinessAnnouncement",
+    "wix.platform.getBusinessTabTitles",
+    "wix.platform.getBusinessDisplayOptions",
+    "wix.platform.getBusinessPermission",
+    "wix.platform.addBookmark",
+    "wix.platform.removeBookmark",
+    "wix.platform.isShortcutServiceAvailable",
+    "wix.platform.addShortcutToHomeScreen",
+    "wix.platform.addDefaultService",
+    "wix.platform.addDefaultSection",
+    "wix.platform.updateWebsiteCreationStatus",
+    "wix.platform.openAppStoreOrGooglePlay",
+    "wix.platform.openUpgradePicker",
+    "wix.platform.isBusinessPremium",
+    "wix.platform.leavePlace"
+  ],
+  "deepLinks": [
+    {
+      "linkPattern": "core/login"
+    },
+    {
+      "linkPattern": "platform/renewPremium"
+    },
+    {
+      "linkPattern": "platform/updateMessage/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/editWebsite/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/websiteEditorView/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/mobilePlaceStrength/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/club/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/dashboard/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/upgrade/:metaSiteId"
+    },
+    {
+      "linkPattern": "platform/dashboard/:metaSiteId/:tab"
+    },
+    {
+      "linkPattern": "roles/contributors",
+      "externalPatterns": [
+        "wix://roles/contributors"
+      ]
+    }
+  ],
+  "hasTabs": true,
+  "consumedServices": [
+    "wix.platform.aboutTabWidgetsService",
+    "wix.platform.dashboardWidgetsService"
+  ],
+  "hasDemoInit": false,
+  "hasManagerApps": false,
+  "hasClientApps": true,
+  "hasInstallableApps": false,
+  "hasQuickActions": false,
+  "hasActivityScreens": false,
+  "modes": [
+    "loggedOut",
+    "place",
+    "dashboard",
+    "dashboardManage",
+    "home"
+  ],
+  "defaultMode": "place"
+}

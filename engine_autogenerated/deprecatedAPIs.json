@@ -1,6 +1,9 @@
 {
   "managerApps": [],
-  "clientApps": [],
+  "clientApps": [
+    "wix-one-app-platform",
+    "ofer_intro"
+  ],
   "installableApps": [],
   "quickActions": [],
   "activityScreens": []

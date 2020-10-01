@@ -1,4 +1,4 @@
-import MockTools from 'wix-one-app-engine/lib/MockTools';
+import { Assets } from 'wix-react-native-ui-lib';
 
 const moduleName = 'one-app-weather-example'
 
@@ -19,30 +19,9 @@ const screenRoutes = {
 
 export default class WeatherModule {
 
-
-    //TODO is this the correct way to set this up?
-    init() {
-        _mockProduction()
-    }
-
     prefix() {
         return moduleName;
     }
-
-
-    _mockProduction() {
-        MockTools.setLoginData({
-            loginCredentials: {
-                email: 'julie@example.com',
-                password: '123456'
-            },
-            selectedBusinessId: '0cb5d2c1-eb52-433a-b7eb-c65da24b66f2'
-        });
-    }
-
-
-
-
 
     components() {
         return [
@@ -52,5 +31,19 @@ export default class WeatherModule {
                 description: 'Weather Widget'
             }
         ]
+    }
+
+    managerApps() {
+        return [
+            {
+                id: 'oferManagerAppId',
+                label: 'Weather app',
+                icon: Assets.icons.general.challenges,
+                dashboardIcon: Assets.icons.apps.challenges,
+                dashboardLargeIcon: Assets.icons.apps.challenges,
+                description: 'Weather app',
+                screenId: screenRoutes.main_route.name
+            },
+        ];
     }
 }

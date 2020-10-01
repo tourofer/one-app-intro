@@ -1,1 +1,49 @@
-[]
+[
+  {
+    "linkPattern": "core/login",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/renewPremium",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/updateMessage/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/editWebsite/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/websiteEditorView/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/mobilePlaceStrength/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/club/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/dashboard/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/upgrade/:metaSiteId",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "platform/dashboard/:metaSiteId/:tab",
+    "moduleName": "wix-one-app-platform"
+  },
+  {
+    "linkPattern": "roles/contributors",
+    "externalPatterns": [
+      "wix://roles/contributors"
+    ],
+    "moduleName": "wix-one-app-platform"
+  }
+]
