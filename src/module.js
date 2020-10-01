@@ -1,4 +1,3 @@
-import { Assets } from 'wix-react-native-ui-lib';
 
 const moduleName = 'one-app-weather-example'
 
@@ -29,11 +28,23 @@ export default class WeatherModule {
                 id: screenRoutes.main_route.name,
                 generator: screenRoutes.main_route.generator,
                 description: 'Weather Widget'
+            }, 
+            {
+                id: screenRoutes.city_info_route.name,
+                generator: screenRoutes.city_info_route.generator,
+                description: 'Weather Widget'
+            }, 
+            {
+                id: screenRoutes.add_city_route.name,
+                generator: screenRoutes.add_city_route.generator,
+                description: 'Weather Widget'
             }
         ]
     }
 
     managerApps() {
+        const {Assets} = require('wix-react-native-ui-lib');
+
         return [
             {
                 id: 'oferManagerAppId',
@@ -46,4 +57,16 @@ export default class WeatherModule {
             },
         ];
     }
+
+    quickActions() {
+        const {Assets} = require('wix-react-native-ui-lib');
+      
+        return [{
+          id: 'add-weather-quick_action',
+          label: 'Click Here to Reach Weather Screen',
+          icon: Assets.icons.general.arrowRight,
+          screenId: screenRoutes.main_route.name,
+          testID: 'add-post-quick_action',
+        },];
+      }
 }

@@ -4,9 +4,6 @@ import MockTools from 'wix-one-app-engine/lib/MockTools';
 export default class CreationDemo {
 
   __unsafe__initializeDemoModule() {
-
-
-
     const mockMode = MockTools.getLoginMode();
     //provide the mock data depending on what mock level the packager is running at
     switch (mockMode) {
@@ -25,7 +22,6 @@ export default class CreationDemo {
 
   init() {
     LogBox.ignoreAllLogs(true)
-    mockProduction()
   }
 
   prefix() {
@@ -38,8 +34,8 @@ function mockProduction() {
   console.log('setting fake login credentials')
     MockTools.setLoginData({
         loginCredentials: {
-            email: 'julie@example.com',
-            password: '123456'
+            email: 'tourofer@gmail.com',
+            password: 'ofer1673'
         },
     });
 }

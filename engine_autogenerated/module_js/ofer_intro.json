@@ -2,13 +2,15 @@
   "name": "ofer_intro",
   "prefix": "one-app-weather-example",
   "components": [
-    "one-app-weather-example.weather.Main"
+    "one-app-weather-example.weather.Main",
+    "one-app-weather-example.weather.cityInfo",
+    "one-app-weather-example.weather.cityAdd"
   ],
   "hasTabs": false,
   "hasDemoInit": false,
-  "hasManagerApps": false,
-  "hasClientApps": true,
+  "hasManagerApps": true,
+  "hasClientApps": false,
   "hasInstallableApps": false,
-  "hasQuickActions": false,
+  "hasQuickActions": true,
   "hasActivityScreens": false
 }

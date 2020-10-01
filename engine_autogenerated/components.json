@@ -93,5 +93,7 @@
   "wix.platform.ManageRoles": "wix-one-app-platform",
   "wix.platform.InviteContributorScreen": "wix-one-app-platform",
   "wix.platform.ChangeRoleScreen": "wix-one-app-platform",
-  "one-app-weather-example.weather.Main": "ofer_intro"
+  "one-app-weather-example.weather.Main": "ofer_intro",
+  "one-app-weather-example.weather.cityInfo": "ofer_intro",
+  "one-app-weather-example.weather.cityAdd": "ofer_intro"
 }
