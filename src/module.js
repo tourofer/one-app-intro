@@ -13,6 +13,10 @@ const screenRoutes = {
     add_city_route: {
         name: moduleName + '.weather.cityAdd',
         generator: () => require("./weather/screens/add_city_screen").default
+    },
+    weather_dashboard_widget_route: {
+        name: moduleName + '.weather.dashboard_widget',
+        generator: () => require("./weather/screens/weather_widget_screen").default
     }
 }
 
@@ -27,18 +31,24 @@ export default class WeatherModule {
             {
                 id: screenRoutes.main_route.name,
                 generator: screenRoutes.main_route.generator,
-                description: 'Weather Widget'
+                description: 'Weather City list'
             }, 
             {
                 id: screenRoutes.city_info_route.name,
                 generator: screenRoutes.city_info_route.generator,
-                description: 'Weather Widget'
+                description: 'City Weather Screen'
             }, 
             {
                 id: screenRoutes.add_city_route.name,
                 generator: screenRoutes.add_city_route.generator,
-                description: 'Weather Widget'
-            }
+                description: 'Add city weather'
+            },
+            {
+                id: screenRoutes.weather_dashboard_widget_route.name,
+                generator: screenRoutes.weather_dashboard_widget_route.generator,
+                description: 'Weather Dashboard Widget'
+            },
+            
         ]
     }
 
@@ -65,7 +75,7 @@ export default class WeatherModule {
           id: 'add-weather-quick_action',
           label: 'Click Here to Reach Weather Screen',
           icon: Assets.icons.general.arrowRight,
-          screenId: screenRoutes.main_route.name,
+          screenId: screenRoutes.weather_dashboard_widget_route.name,
           testID: 'add-post-quick_action',
         },];
       }

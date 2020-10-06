@@ -39,6 +39,8 @@ describe('Generate module.json', () => {
           rgba: jest.fn()
         },
         Shadows: {
+          white30: {},
+          white40: {},
           dark20: {bottom: {}},
           white30: {},
           white40: {},
@@ -261,6 +263,7 @@ describe('Generate module.json', () => {
       requireNativeComponent: jest.fn(),
       Dimensions: {get: jest.fn(() => ({width: 0, height: 0}))},
       PixelRatio: {get: jest.fn()},
+      Alert: {alert: jest.fn()},
       StyleSheet: {create: jest.fn((o) => o), flatten: jest.fn()},
       Animated: {
         timing: jest.fn()

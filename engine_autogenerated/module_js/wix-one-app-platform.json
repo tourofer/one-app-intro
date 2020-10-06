@@ -127,7 +127,9 @@
     "wix.platform.openAppStoreOrGooglePlay",
     "wix.platform.openUpgradePicker",
     "wix.platform.isBusinessPremium",
-    "wix.platform.leavePlace"
+    "wix.platform.getBusinessPremiumInfo",
+    "wix.platform.leavePlace",
+    "wix.platform.getPrimaryColor"
   ],
   "deepLinks": [
     {

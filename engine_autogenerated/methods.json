@@ -28,5 +28,7 @@
   "wix.platform.openAppStoreOrGooglePlay": "wix-one-app-platform",
   "wix.platform.openUpgradePicker": "wix-one-app-platform",
   "wix.platform.isBusinessPremium": "wix-one-app-platform",
-  "wix.platform.leavePlace": "wix-one-app-platform"
+  "wix.platform.getBusinessPremiumInfo": "wix-one-app-platform",
+  "wix.platform.leavePlace": "wix-one-app-platform",
+  "wix.platform.getPrimaryColor": "wix-one-app-platform"
 }
