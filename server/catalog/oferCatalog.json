@@ -1,0 +1,32 @@
+{
+    "sectionsCategories": [
+      {
+        "id": "someUniqueId",
+        "name": "Tab name",
+        "description": "Short description of the catalog tab",
+        "sectionGroups": [
+          {
+            "id": "anotherUniqueId",
+            "title": "Section Number 1",
+            "sections": [
+              {
+                "sectionDefinitionId": "ofer.myFirstSection",
+                "catalogImageUrl": "https://api.giveawayservice.com/uploads/campaigns_product_image/201609090029272bd85caf6f72a81b4187c2613c559e95cfdb5d7e0392adcd1f480fefcd3bd02a6c4f05cd-256.jpg"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "headerActionOptions": [
+      {
+        "id": "oferCta",
+        "title": "Click to Say hello",
+        "actionName": "Ofer’s action",
+        "serviceNames": ["oferService"],
+        "isMethod": true,
+        "methodId": "ofer.SayHello"
+      }
+    ]   
+   }
+   

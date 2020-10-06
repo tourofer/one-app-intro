@@ -30,7 +30,7 @@
     "jest-circus": "^26.4.2",
     "react-test-renderer": "16.13.1",
     "wix-one-app-engine": "ga",
-    "wix-one-app-platform": "ga",
+    "wix-one-app-platform": "wix-private/wix-one-app-platform#platform-api-tutorial",
     "wix-react-native-ui-lib": "ga"
   },
   "peerDependencies": {

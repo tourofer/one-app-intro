@@ -1,5 +1,5 @@
 
-// import { startLoadingForcast } from './weather/screens/weather_widget_screen'
+//import { startLoadingForcast } from './weather/screens/weather_widget_screen'
 const moduleName = 'one-app-weather-example'
 
 export const screenRoutes = {

@@ -36,10 +36,6 @@
     "moduleName": "wix-one-app-platform"
   },
   {
-    "linkPattern": "platform/dashboard/:metaSiteId/:tab",
-    "moduleName": "wix-one-app-platform"
-  },
-  {
     "linkPattern": "roles/contributors",
     "externalPatterns": [
       "wix://roles/contributors"

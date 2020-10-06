@@ -2,9 +2,6 @@
   "name": "wix-one-app-platform",
   "prefix": "wix.platform",
   "components": [
-    "wix.platform.BlockedScreenError",
-    "wix.platform.KillSwitchScreen",
-    "wix.platform.InAppModalScreen",
     "wix.platform.editAboutTab",
     "wix.platform.reorderAboutTabWidgetModal",
     "wix.platform.mobileSettingsScreen",
@@ -125,11 +122,7 @@
     "wix.platform.addDefaultSection",
     "wix.platform.updateWebsiteCreationStatus",
     "wix.platform.openAppStoreOrGooglePlay",
-    "wix.platform.openUpgradePicker",
-    "wix.platform.isBusinessPremium",
-    "wix.platform.getBusinessPremiumInfo",
-    "wix.platform.leavePlace",
-    "wix.platform.getPrimaryColor"
+    "wix.platform.openUpgradePicker"
   ],
   "deepLinks": [
     {
@@ -160,9 +153,6 @@
       "linkPattern": "platform/upgrade/:metaSiteId"
     },
     {
-      "linkPattern": "platform/dashboard/:metaSiteId/:tab"
-    },
-    {
       "linkPattern": "roles/contributors",
       "externalPatterns": [
         "wix://roles/contributors"
@@ -174,6 +164,11 @@
     "wix.platform.aboutTabWidgetsService",
     "wix.platform.dashboardWidgetsService"
   ],
+  "providedServices": [
+    "wix.platform.aboutTabWidgetsService",
+    "wix.platform.dashboardWidgetsService",
+    "wix.platform.UpcomingService"
+  ],
   "hasDemoInit": false,
   "hasManagerApps": false,
   "hasClientApps": true,
@@ -181,7 +176,6 @@
   "hasQuickActions": false,
   "hasActivityScreens": false,
   "modes": [
-    "loggedOut",
     "place",
     "dashboard",
     "dashboardManage",

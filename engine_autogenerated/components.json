@@ -1,7 +1,4 @@
 {
-  "wix.platform.BlockedScreenError": "wix-one-app-platform",
-  "wix.platform.KillSwitchScreen": "wix-one-app-platform",
-  "wix.platform.InAppModalScreen": "wix-one-app-platform",
   "wix.platform.editAboutTab": "wix-one-app-platform",
   "wix.platform.reorderAboutTabWidgetModal": "wix-one-app-platform",
   "wix.platform.mobileSettingsScreen": "wix-one-app-platform",
