@@ -1,8 +1,8 @@
 module.exports = {
     loginData: {
       loginCredentials: {
-        email: 'tourofer@gmail.com',
-        password: 'ofer1673',
+        email: 'tourofer@fdgmail.com',
+        password: 'ofer1ss673df',
       },
     }
   };
