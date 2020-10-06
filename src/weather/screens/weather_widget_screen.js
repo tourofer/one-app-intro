@@ -14,6 +14,8 @@ export const startLoadingForcast = async (_) => {
 
 export default WeatherWidget = (props) => {
 
+
+  //TODO remove once startLoadingForcast will be called from  module.js
   useEffect(() => {
     startLoadingForcast()
   }, [])

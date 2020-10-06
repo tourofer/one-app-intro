@@ -1,0 +1,38 @@
+{
+  "sectionsCategories": [
+    {
+      "id": "someUniqueId",
+      "name": "firstTab",
+      "description": "Short description of the catalog tab",
+      "sectionGroups": [
+        {
+          "id": "anotherUniqueId",
+          "title": "Section Number 1",
+          "sections": [
+            {
+              "sectionDefinitionId": "niryo.myFirstSection",
+              "catalogImageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple91/v4/b6/43/7a/b6437aad-3e1a-bf73-ae09-205a19580ce4/source/256x256bb.jpg"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "someUniqueId2",
+      "name": "secondTab",
+      "description": "Short description of the catalog tab",
+      "sectionGroups": [
+        {
+          "id": "anotherUniqueId",
+          "title": "Section Number 2",
+          "sections": [
+            {
+              "sectionDefinitionId": "niryo.myFirstSection",
+              "catalogImageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple91/v4/b6/43/7a/b6437aad-3e1a-bf73-ae09-205a19580ce4/source/256x256bb.jpg"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

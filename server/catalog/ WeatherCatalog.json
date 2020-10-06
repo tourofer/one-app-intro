@@ -1,0 +1,20 @@
+{
+    "sectionsCategories": [
+      {
+        "id": "mainTab",
+        "name": "main tab",
+        "description": "This is the main tab",
+        "sectionGroups": [
+          {
+            "id": "weather_section_id",
+            "title": "Weather section",
+            "sections": [{
+              "defaultShowTitle": false,
+              "sectionDefinitionId": "weather_section",
+              "catalogImageUrl": "https://m.media-amazon.com/images/I/81gRYr+yLeL._AC_SS350_.jpg"
+            }]
+          }
+        ]
+      }
+    ]
+  }
