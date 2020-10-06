@@ -15,16 +15,22 @@ export const localCitiesData: Array<City> = [
 
 
 interface State {
-    cities: Array<City>
+    cities: Array<City>,
+    widgetData?: DayForcastInterface
 }
 const initialState: State = {
-    cities: localCitiesData
+    cities: localCitiesData,
+    widgetData: null
 }
 
 const existingCityIds = new Set(localCitiesData.map(item => item.id))
 const state = remx.state(initialState);
 
 const getters = remx.getters({
+    getWidgetForcast() {
+        console.log('getWidgetForcast', state)
+        return state.widgetData
+    },
     getCities() {
         return state.cities;
     },
@@ -35,6 +41,10 @@ const getters = remx.getters({
 });
 
 const setters = remx.setters({
+    setWidgetForcast(forcast: DayForcastInterface) {
+        state.widgetData = forcast
+        console.log('setWidgetForcast', state)
+    },
     setCityList(cities: City[]) {
         state.cities = cities
     },

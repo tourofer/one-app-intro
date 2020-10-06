@@ -43,6 +43,14 @@ export async function addCity(componentId: string, city: City) {
     }
 }
 
+export async function fetchWidgetForcast(city: City) : Promise<any> {
+    console.log(`fetching widget forcast items for: ${JSON.stringify(city)}`)
+    const response : DayForcastInterface = await fetchWeather(city.id, city.name, new Date(), 1)
+    console.log(`setting widget forcast data: ${JSON.stringify(response)}`)
+
+    weatherStore.setWidgetForcast(response)
+}
+
 export async function fetchWeather(
     city_id: string,
     city_name: string,

@@ -33,7 +33,7 @@ export default CityWeather = (props) => {
 }
 
 
-const WeatherListItem = ({ item }) => {
+export const WeatherListItem = ({ item }) => {
     return <ListItem
         testID={`weatherItem-${item.id}`}
         activeBackgroundColor={Colors.purple70}

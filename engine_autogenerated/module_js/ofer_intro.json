@@ -4,9 +4,13 @@
   "components": [
     "one-app-weather-example.weather.Main",
     "one-app-weather-example.weather.cityInfo",
-    "one-app-weather-example.weather.cityAdd"
+    "one-app-weather-example.weather.cityAdd",
+    "one-app-weather-example.weather.dashboard_widget"
   ],
   "hasTabs": false,
+  "consumedServices": [
+    "wix.platform.dashboardWidgetsService"
+  ],
   "hasDemoInit": false,
   "hasManagerApps": true,
   "hasClientApps": false,

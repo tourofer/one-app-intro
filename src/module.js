@@ -1,4 +1,5 @@
 
+import {startLoadingForcast} from './weather/screens/weather_widget_screen'
 const moduleName = 'one-app-weather-example'
 
 const screenRoutes = {
@@ -20,6 +21,13 @@ const screenRoutes = {
     }
 }
 
+const widgets = [{
+    id: 'ofer-intro-dashboard.weather-widget',
+    displayName: 'Weather widget',
+    componentId: screenRoutes.weather_dashboard_widget_route.name,
+    startLoadingComponent: startLoadingForcast,
+}]
+
 export default class WeatherModule {
 
     prefix() {
@@ -32,12 +40,12 @@ export default class WeatherModule {
                 id: screenRoutes.main_route.name,
                 generator: screenRoutes.main_route.generator,
                 description: 'Weather City list'
-            }, 
+            },
             {
                 id: screenRoutes.city_info_route.name,
                 generator: screenRoutes.city_info_route.generator,
                 description: 'City Weather Screen'
-            }, 
+            },
             {
                 id: screenRoutes.add_city_route.name,
                 generator: screenRoutes.add_city_route.generator,
@@ -48,12 +56,12 @@ export default class WeatherModule {
                 generator: screenRoutes.weather_dashboard_widget_route.generator,
                 description: 'Weather Dashboard Widget'
             },
-            
+
         ]
     }
 
     managerApps() {
-        const {Assets} = require('wix-react-native-ui-lib');
+        const { Assets } = require('wix-react-native-ui-lib');
 
         return [
             {
@@ -69,14 +77,20 @@ export default class WeatherModule {
     }
 
     quickActions() {
-        const {Assets} = require('wix-react-native-ui-lib');
-      
+        const { Assets } = require('wix-react-native-ui-lib');
+
         return [{
-          id: 'add-weather-quick_action',
-          label: 'Click Here to Reach Weather Screen',
-          icon: Assets.icons.general.arrowRight,
-          screenId: screenRoutes.weather_dashboard_widget_route.name,
-          testID: 'add-post-quick_action',
+            id: 'add-weather-quick_action',
+            label: 'Click Here to Reach Weather Screen',
+            icon: Assets.icons.general.arrowRight,
+            screenId: screenRoutes.weather_dashboard_widget_route.name,
+            testID: 'add-post-quick_action',
         },];
-      }
+    }
+
+    consumedServices() {
+        return {
+            'wix.platform.dashboardWidgetsService': widgets
+        };
+    }
 }
