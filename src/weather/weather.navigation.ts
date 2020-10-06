@@ -1,5 +1,5 @@
 import { Navigation } from 'react-native-navigation';
-import { ScreenRoutes } from '../screens';
+import { screenRoutes } from '../module';
 import { City } from './weather.interface';
 
 export const Navigator = {
@@ -13,7 +13,7 @@ function showAddCityModal() {
             children: [
                 {
                     component: {
-                        name: ScreenRoutes.weather.add_city_route,
+                        name: screenRoutes.add_city_route.name,
                     },
                 },
             ],
@@ -24,7 +24,7 @@ function showAddCityModal() {
 function navigateToCityWeather(componentId: string, city: City) {
     Navigation.push(componentId, {
         component: {
-            name: ScreenRoutes.weather.city_info_route,
+            name: screenRoutes.city_info_route.name,
             passProps: {
                 city: city,
             },

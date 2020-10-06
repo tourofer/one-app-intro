@@ -2,7 +2,7 @@
 import {startLoadingForcast} from './weather/screens/weather_widget_screen'
 const moduleName = 'one-app-weather-example'
 
-const screenRoutes = {
+export const screenRoutes = {
     main_route: {
         name: moduleName + '.weather.Main',
         generator: () => require("./weather/screens/main_weather_display_screen").default
@@ -58,22 +58,6 @@ export default class WeatherModule {
             },
 
         ]
-    }
-
-    managerApps() {
-        const { Assets } = require('wix-react-native-ui-lib');
-
-        return [
-            {
-                id: 'oferManagerAppId',
-                label: 'Weather app',
-                icon: Assets.icons.general.challenges,
-                dashboardIcon: Assets.icons.apps.challenges,
-                dashboardLargeIcon: Assets.icons.apps.challenges,
-                description: 'Weather app',
-                screenId: screenRoutes.main_route.name
-            },
-        ];
     }
 
     quickActions() {
