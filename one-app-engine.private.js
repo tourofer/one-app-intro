@@ -1,9 +1,8 @@
 module.exports = {
     loginData: {
       loginCredentials: {
-        email: 'some@email.com',
-        password: 'password',
+        email: 'tourofer@gmail.com',
+        password: 'ofer1673',
       },
-      selectedBusinessId: 'metasite-guid',
     }
   };

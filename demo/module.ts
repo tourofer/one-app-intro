@@ -32,7 +32,6 @@ export default class CreationDemo {
 
 function mockProduction() {
   console.log('setting fake login credentials')
-  const {credentials} = require('../credentials');
-  MockTools.setLoginData({loginCredentials: credentials});
+  MockTools.setLoginDataFromLocalConfigFile();
 }
 
