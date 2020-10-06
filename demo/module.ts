@@ -1,14 +1,14 @@
-import { LogBox } from 'react-native';
-import MockTools from 'wix-one-app-engine/lib/MockTools';
 
 export default class CreationDemo {
 
   __unsafe__initializeDemoModule() {
-    const mockMode = MockTools.getLoginMode();
+    const mockTools = require('wix-one-app-engine/lib/MockTools')
+    
+    const mockMode = mockTools.getLoginMode();
     //provide the mock data depending on what mock level the packager is running at
     switch (mockMode) {
       case 'quickLogin':
-        mockProduction();
+        mockProduction(mockTools);
         break;
       case 'offline':
         // Should be set in e2e tests
@@ -21,7 +21,7 @@ export default class CreationDemo {
 
 
   init() {
-    LogBox.ignoreAllLogs(true)
+    // LogBox.ignoreAllLogs(true)
   }
 
   prefix() {
@@ -30,9 +30,9 @@ export default class CreationDemo {
 
 }
 
-function mockProduction() {
+function mockProduction(mockTools) {
   console.log('setting fake login credentials')
-    MockTools.setLoginData({
+  mockTools.setLoginData({
         loginCredentials: {
             email: 'tourofer@gmail.com',
             password: 'ofer1673'

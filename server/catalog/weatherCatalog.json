@@ -6,8 +6,8 @@
         "description": "This is the main tab",
         "sectionGroups": [
           {
-            "id": "weather_section_id",
-            "title": "Weather section",
+            "id": "sectionId",
+            "title": "add posts section",
             "sections": [{
               "defaultShowTitle": false,
               "sectionDefinitionId": "weather_section",
