@@ -1,5 +1,5 @@
 
-import {startLoadingForcast} from './weather/screens/weather_widget_screen'
+// import {startLoadingForcast} from './weather/screens/weather_widget_screen'
 const moduleName = 'one-app-weather-example'
 
 export const screenRoutes = {
@@ -21,12 +21,12 @@ export const screenRoutes = {
     }
 }
 
-const widgets = [{
-    id: 'ofer-intro-dashboard.weather-widget',
-    displayName: 'Weather widget',
-    componentId: screenRoutes.weather_dashboard_widget_route.name,
-    startLoadingComponent: startLoadingForcast,
-}]
+// const widgets = [{
+//     id: 'ofer-intro-dashboard.weather-widget',
+//     displayName: 'Weather widget',
+//     componentId: screenRoutes.weather_dashboard_widget_route.name,
+//     startLoadingComponent: startLoadingForcast,
+// }]
 
 export default class WeatherModule {
 
@@ -72,9 +72,9 @@ export default class WeatherModule {
         },];
     }
 
-    consumedServices() {
-        return {
-            'wix.platform.dashboardWidgetsService': widgets
-        };
-    }
+    // consumedServices() {
+    //     return {
+    //         'wix.platform.dashboardWidgetsService': widgets
+    //     };
+    // }
 }

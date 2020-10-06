@@ -15,6 +15,10 @@ export const startLoadingForcast = async (_) => {
 
 export default WeatherWidget = (props) => {
 
+  useEffect(() => {
+    startLoadingForcast()
+  }, [])
+  
   const useForcastDataConnect = () => useConnect(() => ({
     forcast: weatherStore.getWidgetForcast()
   }))
