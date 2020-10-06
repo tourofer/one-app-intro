@@ -78,7 +78,7 @@ export default class WeatherModule {
             id: 'add-weather-quick_action',
             label: 'Click Here to Reach Weather Screen',
             icon: Assets.icons.general.arrowRight,
-            screenId: screenRoutes.weather_dashboard_widget_route.name,
+            screenId: screenRoutes.main_route.name,
             testID: 'add-post-quick_action',
         }];
     }

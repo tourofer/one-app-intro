@@ -32,11 +32,7 @@ export default class CreationDemo {
 
 function mockProduction() {
   console.log('setting fake login credentials')
-    MockTools.setLoginData({
-        loginCredentials: {
-            email: 'tourofer@gmail.com',
-            password: 'ofer1673'
-        },
-    });
+  const {credentials} = require('../credentials');
+  MockTools.setLoginData({loginCredentials: credentials});
 }
 
