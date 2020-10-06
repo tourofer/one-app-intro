@@ -8,6 +8,9 @@
     "one-app-weather-example.weather.dashboard_widget"
   ],
   "hasTabs": false,
+  "consumedServices": [
+    "wix.platform.dashboardWidgetsService"
+  ],
   "hasDemoInit": false,
   "hasManagerApps": false,
   "hasClientApps": false,

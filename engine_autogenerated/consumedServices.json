@@ -3,6 +3,7 @@
     "wix-one-app-platform"
   ],
   "wix.platform.dashboardWidgetsService": [
-    "wix-one-app-platform"
+    "wix-one-app-platform",
+    "ofer_intro"
   ]
 }

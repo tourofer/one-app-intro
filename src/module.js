@@ -1,5 +1,5 @@
 
-// import {startLoadingForcast} from './weather/screens/weather_widget_screen'
+// import { startLoadingForcast } from './weather/screens/weather_widget_screen'
 const moduleName = 'one-app-weather-example'
 
 export const screenRoutes = {
@@ -21,14 +21,24 @@ export const screenRoutes = {
     }
 }
 
-// const widgets = [{
-//     id: 'ofer-intro-dashboard.weather-widget',
-//     displayName: 'Weather widget',
-//     componentId: screenRoutes.weather_dashboard_widget_route.name,
-//     startLoadingComponent: startLoadingForcast,
-// }]
+const widgets = [{
+    id: 'ofer-intro-dashboard.weather-widget',
+    displayName: 'Weather widget',
+    componentId: screenRoutes.weather_dashboard_widget_route.name,
+    startLoadingComponent: (_) => {
+        return new Promise((resolve) => {
+            setTimeout(resolve, 3000);
+        });
+    },
+}]
 
 export default class WeatherModule {
+
+    consumedServices() {
+        return {
+            'wix.platform.dashboardWidgetsService': widgets
+        };
+    }
 
     prefix() {
         return moduleName;
@@ -69,12 +79,6 @@ export default class WeatherModule {
             icon: Assets.icons.general.arrowRight,
             screenId: screenRoutes.weather_dashboard_widget_route.name,
             testID: 'add-post-quick_action',
-        },];
+        }];
     }
-
-    // consumedServices() {
-    //     return {
-    //         'wix.platform.dashboardWidgetsService': widgets
-    //     };
-    // }
 }
