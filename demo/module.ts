@@ -8,7 +8,8 @@ export default class CreationDemo {
     //provide the mock data depending on what mock level the packager is running at
     switch (mockMode) {
       case 'quickLogin':
-        mockProduction(mockTools);
+        console.log('setting fake login credentials')
+        mockTools.setLoginDataFromLocalConfigFile();
         break;
       case 'offline':
         // Should be set in e2e tests
@@ -20,18 +21,10 @@ export default class CreationDemo {
   }
 
 
-  init() {
-    // LogBox.ignoreAllLogs(true)
-  }
-
   prefix() {
     return 'ofer_intro-demo';
   }
 
 }
 
-function mockProduction(mockTools) {
-  console.log('setting fake login credentials')
-  mockTools.setLoginDataFromLocalConfigFile();
-}
 
