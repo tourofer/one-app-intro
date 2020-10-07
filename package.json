@@ -12,7 +12,7 @@
     "start": "one-app-engine --mock-mode quickLogin -ia —force-localhost",
     "start-ios": "one-app-engine --mock-mode quickLogin -i —force-localhost",
     "start-android": "one-app-engine --mock-mode quickLogin -a —force-localhost",
-    "postinstall": "one-app-engine —setup"
+    "postinstall": "one-app-engine —-setup"
   },
   "main": "src/module.js",
   "dependencies": {
