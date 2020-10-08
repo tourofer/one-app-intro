@@ -6,9 +6,10 @@ import * as WeatherAction from "../service/weather.actions"
 export default CityWeather = (props) => {
 
     const [response, setResponse] = useState(null)
+    const date = new Date()
     useEffect(() => {
         async function fetchData() {
-            const response = await WeatherAction.fetchWeather(props.city.id, props.city.name, new Date())
+            const response = await WeatherAction.fetchWeather(props.city.id, props.city.name, date)
             setResponse(response)
         }
         fetchData()

@@ -1,11 +1,12 @@
 import "../weather.interface"
 import { ForcastItemInterface, City } from "../weather.interface";
 import moment from 'moment';
-import NetInfo from "@react-native-community/netinfo";
 
 export const base_weather_api_url = "https://www.metaweather.com/api/location"
 export const base_app_server_url = "http://localhost:3000"
 export const city_list_url = base_app_server_url + "/cities"
+
+const NetInfo = require("@react-native-community/netinfo");
 
 
 export interface Response<T> {
@@ -21,6 +22,7 @@ export async function fetchCitiesList(): Promise<Array<City>> {
 }
 
 export async function addCity(city: City): Promise<City> {
+
     const response = await fetch(city_list_url, {
         method: 'POST',
         headers: {

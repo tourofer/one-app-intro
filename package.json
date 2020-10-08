@@ -13,7 +13,7 @@
     "start-ios": "one-app-engine --mock-mode quickLogin -i —force-localhost",
     "start-android": "one-app-engine --mock-mode quickLogin -a —force-localhost",
     "postinstall": "one-app-engine --setup"
-    },
+  },
   "main": "src/module.js",
   "dependencies": {
     "react-native-navigation-hooks": "^6.1.0",
