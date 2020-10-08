@@ -58,6 +58,7 @@ export default MainWeather = (props) => {
 }
 MainWeather.options = {
     topBar: {
+        backButton: { visible: true, testID: "back-button" },
         rightButtons: [
             {
                 id: 'addCity',

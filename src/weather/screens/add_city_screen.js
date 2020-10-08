@@ -1,8 +1,10 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 import { View, Text, TextField, ListItem, Colors } from 'react-native-ui-lib'
-import {AddCityHook} from './add_city_hook'
-
+import { AddCityHook } from './add_city_hook'
+import { useNavigationButtonPress } from 'react-native-navigation-hooks';
+import {Navigation} from 'react-native-navigation'
+import { Assets } from 'wix-react-native-ui-lib';
 
 
 export default AddCityScreen = (props) => {
@@ -13,7 +15,12 @@ export default AddCityScreen = (props) => {
         showNoResults,
         cities } = AddCityHook(props)
 
-    //  react hook testing library
+    const handleNavigationButtonPress = useCallback(() => {
+        Navigation.dismissModal(props.componentId);
+    }, [props.componentId])
+
+    useNavigationButtonPress(handleNavigationButtonPress, props.componentId, 'cancelBtn');
+
     citiesKeyExtractor = (city) => `${city.id}-key`;
 
     renderListItem = ({ item }) => {
@@ -65,9 +72,14 @@ export default AddCityScreen = (props) => {
 AddCityScreen.options = {
     topBar: {
         title: {
-            text: 'Search cities',
+            text: 'Search cities - 1',
         },
+        leftButtons: [{
+            id: 'cancelBtn',
+            icon: Assets.icons.x
+        }]
     },
+
 };
 
 const styles = StyleSheet.create({
