@@ -46,7 +46,7 @@ export async function fetchWeather(
     city_id: string,
     date: Date,
 ): Promise<Array<ForcastItemInterface>> {
-    const requestDateFormat = moment(date).utc().format('yyyy/MM/DD')
+    const requestDateFormat = moment(date).utc().format('2020/MM/DD')
     const response = await fetch(`${base_weather_api_url}/${city_id}/${requestDateFormat}/`);
     return await response.json()
 }
