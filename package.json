@@ -16,10 +16,11 @@
   },
   "main": "src/module.js",
   "dependencies": {
-    "react-native-navigation-hooks": "^6.1.0",
-    "lodash.debounce": "^4.0.8"
+    "lodash.debounce": "^4.0.8",
+    "react-native-navigation-hooks": "^6.1.0"
   },
   "devDependencies": {
+    "@react-native-community/netinfo": "^5.9.7",
     "@types/jest": "^26.0.13",
     "@types/react-native": "^0.63.15",
     "@react-native-community/eslint-config": "^1.1.0",

@@ -4,8 +4,8 @@ import * as uut from './weather.actions'
 import {Navigation} from 'react-native-navigation'
 import {weatherStore} from '../store/weather.store'
 
-jest.mock('./weather.api')
 jest.mock('./weather.parser')
+jest.mock('./weather.api')
 jest.mock('../store/weather.store')
 jest.mock('react-native-navigation')
 

@@ -2,9 +2,11 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import { AddCityHook } from './add_city_hook';
 import * as weatherActions from '../service/weather.actions';
 import * as addCityPresenter from './add_city_screen_presenter';
+import {NetInfo} from "@react-native-community/netinfo"
 
 jest.mock('./add_city_screen_presenter')
 jest.mock("../service/weather.actions")
+jest.mock("@react-native-community/netinfo")
 
 describe('add_city_hook', () => {
 
